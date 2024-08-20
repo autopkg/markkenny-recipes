@@ -1,7 +1,7 @@
 Description: Downloads the latest version of Rainbow and creates a package.
 Identifier: com.github.markkenny.autopkg.pkg.rainbow
 ParentRecipe: com.github.markkenny.autopkg.download.Rainbow
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Rainbow

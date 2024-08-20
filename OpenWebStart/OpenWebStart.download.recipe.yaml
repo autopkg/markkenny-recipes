@@ -1,6 +1,6 @@
 Description: Download the latest release of the OpenWebStart installer from GitHub. Taken from NStraus and added platform
 Identifier: com.github.markkenny.autopkg.download.OpenWebStart
-MinimumVersion: '1.0'
+MinimumVersion: "1.0"
 
 Input:
   NAME: OpenWebStart

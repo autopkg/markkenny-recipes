@@ -1,7 +1,7 @@
 Description: Packges the latest download of Scribe Desktop.
 Identifier: com.github.markkenny.autopkg.pkg.scribedesktop
 ParentRecipe: com.github.markkenny.autopkg.download.scribedesktop
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Scribe Desktop

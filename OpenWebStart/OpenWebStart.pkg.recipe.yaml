@@ -1,7 +1,7 @@
 Description: Download the latest release of the OpenWebStart installer and build a package.
 Identifier: com.github.markkenny.autopkg.pkg.OpenWebStart
 ParentRecipe: com.github.markkenny.autopkg.download.OpenWebStart
-MinimumVersion: '1.0'
+MinimumVersion: "1.0"
 
 Input:
   NAME: OpenWebStart

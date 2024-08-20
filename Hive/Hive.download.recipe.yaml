@@ -1,7 +1,7 @@
 Comment: Created by MK 2023 02 13
 Description: Downloads the latest version of Hive.
 Identifier: com.github.markkenny.autopkg.download.Hive
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Hive

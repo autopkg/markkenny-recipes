@@ -1,7 +1,7 @@
 Comment: Created by MK 2023 03 16
 Description: Downloads the latest version of Rainbow.
 Identifier: com.github.markkenny.autopkg.download.Rainbow
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Rainbow

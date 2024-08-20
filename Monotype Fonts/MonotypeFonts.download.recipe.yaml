@@ -1,5 +1,4 @@
 Description: Downloads the latest Monotype Fonts. MK 2024 04 24
-
 Identifier: com.github.markkenny.autopkg.download.monotypefonts
 MinimumVersion: "2.3"
 

@@ -1,9 +1,8 @@
 Description: Packages the current release version of Monotype Fonts
 Identifier: com.github.markkenny.autopkg.pkg.monotypefonts
+MinimumVersion: "2.3"
 
 ParentRecipe: com.github.markkenny.autopkg.download.monotypefonts
-
-MinimumVersion: "2.3"
 
 Input:
   NAME: Monotype Fonts

@@ -1,6 +1,6 @@
 Description: Downloads the current release of Adobe Workfront Proof
 Identifier: com.github.markkenny.autopkg.download.adobe-workfront-proof
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Workfront Proof
