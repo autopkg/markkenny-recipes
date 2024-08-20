@@ -1,7 +1,7 @@
 Description: Downloads the latest version of Topaz Sharpen and creates a package.
 Identifier: com.github.markkenny.autopkg.pkg.topaz-sharpen
 ParentRecipe: com.github.markkenny.autopkg.download.topaz-sharpen
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Topaz Sharpen

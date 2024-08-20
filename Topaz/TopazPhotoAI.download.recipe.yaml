@@ -1,7 +1,7 @@
 Comment: Created by MK 2023 12 19
 Description: Downloads the latest version of Topaz Photo AI.
 Identifier: com.github.markkenny.autopkg.download.topaz-photo-ai
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Topaz Photo AI

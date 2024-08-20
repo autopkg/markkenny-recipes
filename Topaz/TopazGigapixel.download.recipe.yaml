@@ -1,7 +1,7 @@
 Comment: Created by MK 2023 05 05
 Description: Downloads the latest version of Topaz GigaPixel.
 Identifier: com.github.markkenny.autopkg.download.topaz-gigapixel
-MinimumVersion: 2.3
+MinimumVersion: "2.3"
 
 Input:
   NAME: Topaz Gigapixel
