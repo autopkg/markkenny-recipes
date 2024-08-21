@@ -28,4 +28,4 @@ Process:
   - Processor: PkgCopier
     Arguments:
       pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
-      source_pkg: "%pathname%"
+      source_pkg: "%flat_pkg_path%"
