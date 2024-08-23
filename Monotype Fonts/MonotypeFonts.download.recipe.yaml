@@ -18,6 +18,13 @@ Process:
       url: "%match%"
       filename: "MTFInstaller.zip"
 
+  - Processor: Unarchiver
+    Arguments:
+        archive_path: "%pathname%"
+        destination_path: "%RECIPE_CACHE_DIR%/unzip"
+        purge_destination: false
+        archive_format: zip
+
   - Processor: EndOfCheckPhase
 
   - Processor: CodeSignatureVerifier
@@ -27,3 +34,4 @@ Process:
         - "Developer ID Installer: Monotype Imaging (9TY7K37N87)"
         - Developer ID Certification Authority
         - Apple Root CA
+
