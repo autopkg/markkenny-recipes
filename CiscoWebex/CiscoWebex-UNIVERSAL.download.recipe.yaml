@@ -24,6 +24,14 @@ Process:
         input_plist_path: '%pathname%/Webex.app/Contents/Info.plist'
         plist_version_key: CFBundleShortVersionString
 
+  - Processor: PlistReader
+    Arguments:
+      info_path: "%pathname%/Webex.app/Contents/Info.plist"
+      plist_keys:
+        CFBundleIdentifier: bundle_id
+        CFBundleShortVersionString: bundle_version
+        CFBundleName: bundle_name
+
   - Processor: URLDownloader
     Arguments:
         filename: '%NAME%-%SILICON_ARCH%.dmg'
