@@ -1,0 +1,39 @@
+Identifier: com.github.markkenny.autopkg.download.cisco-webex-universal
+Description: Downloads both Apple Silicon and Intel DMGs for Cisco Webex 
+Input:
+  INTEL_ARCH: x64
+  INTEL_TYPE: WebexTeamsDesktop-MACOS-Gold
+  SILICON_ARCH: arm64
+  SILICON_TYPE: WebexDesktop-MACOS-Apple-Silicon-Gold
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+        filename: '%NAME%-%INTEL_ARCH%.dmg'
+        url: 'https://binaries.webex.com/%INTEL_TYPE%/Webex.dmg'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+        input_path: '%pathname%/Webex.app'
+        requirement: identifier "Cisco-Systems.Spark" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = DE8Y96K9QP
+
+  - Processor: Versioner
+    Arguments:
+        input_plist_path: '%pathname%/Webex.app/Contents/Info.plist'
+        plist_version_key: CFBundleShortVersionString
+
+  - Processor: URLDownloader
+    Arguments:
+        filename: '%NAME%-%SILICON_ARCH%.dmg'
+        url: 'https://binaries.webex.com/%SILICON_TYPE%/Webex.dmg'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+        input_path: '%pathname%/Webex.app'
+        requirement: identifier "Cisco-Systems.Spark" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = DE8Y96K9QP
+
+  - Processor: EndOfCheckPhase
