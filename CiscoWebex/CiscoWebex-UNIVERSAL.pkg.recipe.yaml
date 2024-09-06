@@ -3,6 +3,7 @@ Description: Packages both Intel and Silicon versions of Webex into a universal 
 ParentRecipe: com.github.markkenny.autopkg.download.cisco-webex-universal
 Input:
   RECIPE_bundle_name: Webex
+  bundle_name: Webex
   Intel: MACOS-Gold
   Silicon: MACOS-Apple-Silicon-Gold
 
@@ -16,7 +17,7 @@ Process:
 
   - Processor: FileFinder
     Arguments:
-      pattern: "%RECIPE_CACHE_DIR%/Downloads/%bundle_name%-Intel.dmg"
+      pattern: "%RECIPE_CACHE_DIR%/Downloads/%bundle_name%-x64.dmg"
 
   - Processor: Copier
     Arguments:
@@ -49,7 +50,7 @@ Process:
 
   - Processor: FileFinder
     Arguments:
-      pattern: "%RECIPE_CACHE_DIR%/Downloads/%bundle_name%-Silicon.dmg"
+      pattern: "%RECIPE_CACHE_DIR%/Downloads/%bundle_name%-arm64.dmg"
 
   - Processor: Copier
     Arguments:
