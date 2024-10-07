@@ -12,10 +12,10 @@ Process:
 
 - Processor: URLDownloader
   Arguments:
-    filename: '%NAME%.pkg'
-    url: '%DOWNLOAD_URL%'
     curl_opts:
       user-agent: '%USER_AGENT%'
+    filename: '%NAME%.pkg'
+    url: '%DOWNLOAD_URL%'
 
 - Processor: EndOfCheckPhase
 
