@@ -13,8 +13,10 @@ Process:
 - Processor: URLDownloader
   Arguments:
     curl_opts:
-      user-agent: '%USER_AGENT%'
+      - --location
     filename: '%NAME%.pkg'
+    request_headers:
+      user-agent: '%USER_AGENT%'
     url: '%DOWNLOAD_URL%'
 
 - Processor: EndOfCheckPhase
