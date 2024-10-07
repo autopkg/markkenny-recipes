@@ -1,4 +1,4 @@
-Description: Downloads the current release of Adobe Workfront Proof
+Description: Downloads the current release of Adobe Workfront Proof. Changed to USER_AGENT
 Identifier: com.github.markkenny.autopkg.download.adobe-workfront-proof
 
 MinimumVersion: "2.3"

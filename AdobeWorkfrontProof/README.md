@@ -23,10 +23,19 @@ URL to download has changed. Moving to a curl download.
 https://github.com/autopkg/autopkg/blob/master/Code/autopkglib/CURLDownloader.py
 https://derflounder.wordpress.com/2022/02/03/querying-an-api-for-autopkg-download-urls/
 
+Thanks to NickETH, using their LyX-Win64 for tothe the curl_opts correct
+
+Input:
+  NAME: Workfront Proof
+  DOWNLOAD_URL: https://app.proofhq.com/desktopviewer/mac
+  USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15
+
+Process:
 - Processor: URLDownloader
   Arguments:
-    filename: '%NAME%.pkg'
-    url: '%DOWNLOAD_URL%'
     curl_opts:
+      - --location
+    filename: '%NAME%.pkg'
     request_headers:
       user-agent: '%USER_AGENT%'
+    url: '%DOWNLOAD_URL%'
