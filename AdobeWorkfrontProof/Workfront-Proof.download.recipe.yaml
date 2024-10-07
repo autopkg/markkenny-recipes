@@ -15,7 +15,6 @@ Process:
     filename: '%NAME%.pkg'
     url: '%DOWNLOAD_URL%'
     curl_opts:
-    request_headers:
       user-agent: '%USER_AGENT%'
 
 - Processor: EndOfCheckPhase
