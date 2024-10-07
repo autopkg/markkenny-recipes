@@ -1,24 +1,22 @@
 Description: Downloads the current release of Adobe Workfront Proof
 Identifier: com.github.markkenny.autopkg.download.adobe-workfront-proof
+
 MinimumVersion: "2.3"
 
 Input:
   NAME: Workfront Proof
-  SEARCH_URL: https://experienceleague.adobe.com/docs/workfront/using/review-and-approve-work/proofing/use-the-desktop-proofing-viewer/installing-desktop-proofing-viewer.html?lang=en
-  SEARCH_PATTERN: (https://assets\.proofhq\.com/nativeviewer/desktop_viewer/Workfront\+Proof-.*?\.pkg)
-  USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+  DOWNLOAD_URL: https://app.proofhq.com/desktopviewer/mac
+  USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15
 
 Process:
-
-- Processor: URLTextSearcher
-  Arguments:
-    re_pattern: '%SEARCH_PATTERN%'
-    url: '%SEARCH_URL%'
 
 - Processor: URLDownloader
   Arguments:
     filename: '%NAME%.pkg'
-    url: '%match%'
+    url: '%DOWNLOAD_URL%'
+    curl_opts:
+    request_headers:
+      user-agent: '%USER_AGENT%'
 
 - Processor: EndOfCheckPhase
 
