@@ -8,7 +8,7 @@ Input:
 Process:
 - Processor: SparkleUpdateInfoProvider
   Arguments:
-    appcast_url: https://sparkle.extensis.com/u/ST/EN/suitcase25en.xml
+    appcast_url: https://sparkle.extensis.com/u/ST/EN/suitcase26en.xml
 
 - Processor: URLDownloader
   Arguments:
