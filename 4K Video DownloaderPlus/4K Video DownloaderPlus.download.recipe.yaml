@@ -1,0 +1,36 @@
+Description: Downloads the latest 4K Video Downloader Plus
+Identifier: com.github.markkenny.autopkg.download.4kvideodownloaderplus
+
+MinimumVersion: "2.3"
+
+Input:
+  NAME: 4K Video Downloader Plus
+
+Process:
+
+- Processor: URLTextSearcher
+  Arguments:
+    request_headers:
+      user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
+    url: 'https://www.4kdownload.com/thanks-for-downloading?source=videodownloaderplus'
+    re_pattern: href=\"(https://dl\.4kdownload\.com/app/4kvideodownloaderplus_([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)_x64\.dmg\?source=website)\"
+    result_output_var_name: DOWNLOAD_URL
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/4K Video Downloader+.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/4K Video Downloader+.app'
+    requirement: identifier "com.openmedia.4kvideodownloaderplus" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GHQ37VJF83
+
+
