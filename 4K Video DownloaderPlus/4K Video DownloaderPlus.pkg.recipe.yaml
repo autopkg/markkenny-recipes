@@ -8,3 +8,8 @@ Input:
 
 Process:
 - Processor: AppPkgCreator
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/4KVideoDownloader-%version%.pkg'
