@@ -1,0 +1,13 @@
+Description: Packges the latest download of 4K Video Downloader Plus
+Identifier: com.github.markkenny.autopkg.pkg.4kvideodownloaderplus
+ParentRecipe: com.github.dataJAR-recipes.download.4K Video DownloaderPlus
+MinimumVersion: "2.3"
+
+Input:
+  NAME: 4K Video Downloader Plus
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    app_path: '%pathname%/4K Video Downloader+.app'
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
