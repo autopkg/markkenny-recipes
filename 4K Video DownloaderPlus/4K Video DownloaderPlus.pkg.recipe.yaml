@@ -1,4 +1,4 @@
-Description: Packges the latest download of 4K Video Downloader Plus
+Description: Packges the latest download of 4K Video Downloader Plus 2024 10 25
 Identifier: com.github.markkenny.autopkg.pkg.4kvideodownloaderplus
 ParentRecipe: com.github.markkenny.autopkg.download.4kvideodownloaderplus
 MinimumVersion: "2.3"
