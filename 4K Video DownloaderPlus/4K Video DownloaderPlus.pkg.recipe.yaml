@@ -8,6 +8,3 @@ Input:
 
 Process:
 - Processor: AppPkgCreator
-  Arguments:
-    app_path: '%pathname%/4K Video Downloader+.app'
-    pkg_path: '%NAME%-%version%.pkg'
