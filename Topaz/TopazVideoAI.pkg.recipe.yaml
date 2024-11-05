@@ -1,0 +1,14 @@
+Comment: Created by MK 2024 11 05
+Description: Downloads the latest version of Topaz Video AI and creates a versioned package.
+Identifier: com.github.markkenny.autopkg.pkg.topaz-video-ai
+ParentRecipe: com.github.markkenny.autopkg.download.topaz-video-ai
+MinimumVersion: 2.3
+
+Input:
+  NAME: Topaz Video AI
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    app_path: '%pathname%/Topaz Video AI.app'
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
