@@ -4,24 +4,17 @@ Identifier: com.github.markkenny.autopkg.download.topaz-video-ai
 MinimumVersion: "2.3"
 
 Input:
-  NAME: Topaz Videoe AI
-  DOWNLOAD_URL: https://topazlabs.com/d/photo/latest/mac/full
+  NAME: Topaz Video AI
+  DOWNLOAD_URL: https://topazlabs.com/d/tvai/latest/mac/full
   USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
 
 Process:
 - Processor: URLDownloader
   Arguments:
-    filename: '%NAME%.pkg'
+    filename: '%NAME%.dmg'
     request_headers:
       user-agent: '%USER_AGENT%'
     url: '%DOWNLOAD_URL%'
 
 - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Topaz Labs, LLC (3G3JE37ZHF)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
