@@ -17,12 +17,7 @@ Process:
   - Processor: CodeSignatureVerifier
     Arguments:
       input_path: '%pathname%/Topaz Video AI.app'
-      requirement: >-
-        identifier "com.topazlabs.Topaz-Video-AI"
-        and anchor apple generic
-        and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */
-        and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */
-        and certificate leaf[subject.OU] = "3G3JE37ZHF"
+      requirement: identifier "com.topazlabs.Topaz-Video-AI" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3G3JE37ZHF"
 
   - Processor: Versioner
     Arguments:
