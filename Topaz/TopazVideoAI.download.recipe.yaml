@@ -1,7 +1,7 @@
 Comment: Created by MK 20241111
 Description: Downloads the latest version of Topaz Video AI
 Identifier: com.github.markkenny.autopkg.download.topaz-video-ai
-MinimumVersion: "2.7.3"
+MinimumVersion: 2.7.3
 
 Input:
   NAME: Topaz Video AI
@@ -9,7 +9,7 @@ Input:
 Process:
 - Processor: URLDownloader
   Arguments:
-    url: "https://topazlabs.com/d/tvai/latest/mac/full"
+    url: https://topazlabs.com/d/tvai/latest/mac/full
     prefetch_filename: true
 
 - Processor: EndOfCheckPhase
