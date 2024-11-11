@@ -1,5 +1,5 @@
-Comment: Created by MK 2024 11 05
-Description: Downloads the latest version of Topaz Video AI and creates a versioned package.
+Comment: Created by MK 2024 11 11
+Description: Packages the latest version of Topaz Video AI
 Identifier: com.github.markkenny.autopkg.pkg.topaz-video-ai
 ParentRecipe: com.github.markkenny.autopkg.download.topaz-video-ai
 MinimumVersion: 2.3
@@ -8,7 +8,28 @@ Input:
   NAME: Topaz Video AI
 
 Process:
-- Processor: AppPkgCreator
+- Processor: FlatPkgUnpacker
   Arguments:
-    app_path: '%pathname%/Topaz Video AI.app'
+    destination_path: '%RECIPE_CACHE_DIR%/expanded'
+    flat_pkg_path: '%pathname%'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpack'
+    pkg_payload_path: '%RECIPE_CACHE_DIR%/expanded/Topaz_Video_AI.pkg/Payload'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/unpack/Applications/Topaz Video AI.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCopier
+  Arguments:
     pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/expanded'
+    - '%RECIPE_CACHE_DIR%/unpack'
