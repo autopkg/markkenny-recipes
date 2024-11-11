@@ -5,16 +5,20 @@ MinimumVersion: "2.3"
 
 Input:
   NAME: Topaz Video AI
-  DOWNLOAD_URL: https://topazlabs.com/d/tvai/latest/mac/full
-  USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
 
 Process:
 - Processor: URLDownloader
-  Arguments:
-    filename: '%NAME%.dmg'
-    request_headers:
-      user-agent: '%USER_AGENT%'
-    url: '%DOWNLOAD_URL%'
+    Arguments:
+      url: "https://topazlabs.com/d/tvai/latest/mac/full"
 
 - Processor: EndOfCheckPhase
 
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Topaz Videop AI.app'
+    requirement: identifier "com.topazlabs.Topaz-Video-AI" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3G3JE37ZHF"
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Topaz Video AI.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
