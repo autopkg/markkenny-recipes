@@ -1,7 +1,7 @@
-Comment: Created by MK 2024 11 11
-Description: Downloads the latest version of Topaz Video AI.
+Comment: Created by MK 20241111
+Description: Downloads the latest version of Topaz Video AI
 Identifier: com.github.markkenny.autopkg.download.topaz-video-ai
-MinimumVersion: "2.3"
+MinimumVersion: "2.7.3"
 
 Input:
   NAME: Topaz Video AI
@@ -23,3 +23,4 @@ Process:
   Arguments:
     input_plist_path: '%pathname%/Topaz Video AI.app/Contents/Info.plist'
     plist_version_key: CFBundleShortVersionString
+
