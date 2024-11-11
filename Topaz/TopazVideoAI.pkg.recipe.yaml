@@ -4,3 +4,7 @@ Identifier: com.github.markkenny.autopkg.pkg.topaz-video-ai
 ParentRecipe: com.github.markkenny.autopkg.download.topaz-video-ai
 MinimumVersion: 2.3
 
+Input:
+  NAME: Topaz Video AI
+
+  
