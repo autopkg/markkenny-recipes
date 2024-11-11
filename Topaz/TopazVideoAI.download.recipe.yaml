@@ -7,10 +7,10 @@ Input:
   NAME: Topaz Video AI
 
 Process:
-- Processor: URLDownloader
+  - Processor: URLDownloader
     Arguments:
-      prefetch_filename: true
       url: "https://topazlabs.com/d/tvai/latest/mac/full"
+      prefetch_filename: true
 
 - Processor: EndOfCheckPhase
 
