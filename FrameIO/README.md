@@ -19,3 +19,19 @@ BEN TOMS - WORKING
 
 MK - FAIL
 https://transferapp.frame.io/Frame.io-Transfer/.*/_index/.*/darwin/x64/Frame.io%20Transfer-.*dmg
+
+(https://transferapp\.frame\.io/Frame\.io-Transfer/.*/latest/darwin/x64/Frame.*\.dmg)
+
+https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/_index/.*?/darwin/x64/Frame\.io%20Transfer-.*?\.dmg
+https://transferapp\.frame\.io/Frame\.io-Transfer/\*/_index/\*/darwin/x64/Frame\.io%20Transfer-.*?\.dmg
+
+https://transferapp.frame.io/Frame.io-Transfer/6ab0c27d61d7cf8793b0357e6533ed81/latest/darwin/x64/Frame.io+Transfer.dmg
+
+https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/latest/darwin/x64/Frame\.io%20Transfer\.dmg
+
+
+https://transferapp\.frame\.io/Frame\.io-Transfer/[^/]+/latest/darwin/x64/Frame\.io%20Transfer\.dmg
+https://transferapp.frame.io/Frame.io-Transfer/6ab0c27d61d7cf8793b0357e6533ed81/latest/darwin/x64/Frame.io+Transfer.dmg
+
+
+https://transferapp\.frame\.io/Frame\.io-Transfer/[a-zA-Z0-9]{32}/latest/darwin/x64/Frame\.io%20Transfer\.dmg
