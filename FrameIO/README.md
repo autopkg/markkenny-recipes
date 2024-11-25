@@ -35,3 +35,6 @@ https://transferapp.frame.io/Frame.io-Transfer/6ab0c27d61d7cf8793b0357e6533ed81/
 
 
 https://transferapp\.frame\.io/Frame\.io-Transfer/[a-zA-Z0-9]{32}/latest/darwin/x64/Frame\.io%20Transfer\.dmg
+
+
+https://regex101.com/r/mECkig/1
