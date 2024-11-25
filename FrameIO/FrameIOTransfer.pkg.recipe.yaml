@@ -1,7 +1,7 @@
 Comment: Created by MK 2023 08 14
 Description: Downloads and packages the latest Frame IO
-Identifier: com.github.markkenny.autopkg.pkg.frameio
-ParentRecipe: com.github.markkenny.autopkg.download.frameio
+Identifier: com.github.markkenny.autopkg.pkg.frameiotransfer
+ParentRecipe: com.github.markkenny.autopkg.download.frameiotransfer
 MinimumVersion: "2.3"
 
 Input:

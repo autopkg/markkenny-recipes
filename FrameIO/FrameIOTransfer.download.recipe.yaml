@@ -1,12 +1,12 @@
-Comment: Created by MK 2023 08 14
+Comment: Created by MK 2024 11 25 updated SEARCH_PATTERN REGEX
 Description: Downloads the latest Frame IO
-Identifier: com.github.markkenny.autopkg.download.frameio
-MinimumVersion: "2.3"
+Identifier: com.github.markkenny.autopkg.download.frameiotransfer
+MinimumVersion: 2.3
 
 Input:
   NAME: FrameIO Transfer
   SEARCH_URL: https://frame.io/transfer
-  SEARCH_PATTERN: (https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/_index/.*?/darwin/x64/Frame\.io%20Transfer-.*?\.dmg)
+  SEARCH_PATTERN: (https://transferapp\.frame\.io/Frame\.io-Transfer/.*/latest/darwin/x64/Frame.*\.dmg)
 
 Process:
 - Processor: URLTextSearcher
