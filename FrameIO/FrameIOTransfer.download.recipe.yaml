@@ -1,4 +1,4 @@
-Comment: Created by MK 2024 11 25 updated SEARCH_PATTERN REGEX
+Comment: Created by MK 2024 11 26 Struggling
 Description: Downloads the latest Frame IO
 Identifier: com.github.markkenny.autopkg.download.frameiotransfer
 MinimumVersion: 2.3
@@ -7,6 +7,8 @@ Input:
   NAME: FrameIO Transfer
   SEARCH_URL: https://frame.io/transfer
   SEARCH_PATTERN: (https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/latest/darwin/x64/Frame.*\.dmg)
+
+Comment: My SEARCH_PATTERN regex is not good enough, and I can't skip the error!
 
 Process:
 - Processor: URLTextSearcher
