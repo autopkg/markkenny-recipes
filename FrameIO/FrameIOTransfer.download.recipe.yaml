@@ -7,8 +7,8 @@ Input:
   NAME: FrameIO Transfer
   SEARCH_URL: https://frame.io/transfer
   SEARCH_PATTERN: (https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/latest/darwin/x64/Frame.*\.dmg)
-
-Comment: My SEARCH_PATTERN regex is not good enough, and I can't skip the error!
+# My SEARCH_PATTERN regex is not good enough, and I can't skip the error!
+# This download recipe doesn't work. See README.md
 
 Process:
 - Processor: URLTextSearcher

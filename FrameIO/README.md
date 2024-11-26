@@ -1,18 +1,5 @@
 # NOTES
 
-        <dict>
-            <key>Processor</key>
-            <string>URLDownloader</string>
-            <key>Arguments</key>
-            <dict>
-                <key>url</key>
-                <string>https://transferapp.frame.io/Frame.io-Transfer/.*/_index/.*/darwin/x64/Frame.io%20Transfer-.*dmg</string>
-                <key>filename</key>
-                <string>%NAME%.dmg</string>
-            </dict>
-        </dict>
-
-
 BEN TOMS - WORKING
 (https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/_index/.*?/darwin/x64/Frame\.io%20Transfer-.*?\.dmg)
 (https://transferapp\.frame\.io/Frame\.io-Transfer/\*/_index/\*/darwin/x64/Frame\.io%20Transfer-.*?\.dmg)
@@ -38,3 +25,4 @@ https://transferapp\.frame\.io/Frame\.io-Transfer/[a-zA-Z0-9]{32}/latest/darwin/
 
 
 https://regex101.com/r/mECkig/1
+Catastrophic backtracking has been detected and the execution of your expression has been halted. To find out more and what this is, please read the following article: Runaway Regular Expressions
