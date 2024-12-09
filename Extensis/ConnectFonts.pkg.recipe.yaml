@@ -1,7 +1,7 @@
 Comment: Written by MK 2024 12 09 - learning every day
 Description: Packages the latest downloaded version of Connect Fonts
-Identifier: com.github.markkenny.autopkg.pkg.Connectfonts
-ParentRecipe: com.github.markkenny.autopkg.download.Connectfonts
+Identifier: com.github.markkenny.autopkg.pkg.ConnectFonts
+ParentRecipe: com.github.markkenny.autopkg.download.ConnectFonts
 MinimumVersion: "2.3"
 
 Input:

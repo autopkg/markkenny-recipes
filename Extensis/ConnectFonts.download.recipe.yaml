@@ -1,5 +1,5 @@
 Description: Downloads the latest version of Connect Fonts
-Identifier: com.github.markkenny.autopkg.download.Connectfonts
+Identifier: com.github.markkenny.autopkg.download.ConnectFonts
 MinimumVersion: "2.3"
 
 Input:
