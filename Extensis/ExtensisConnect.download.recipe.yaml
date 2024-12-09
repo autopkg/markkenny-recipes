@@ -6,9 +6,10 @@ Input:
   NAME: Extensis Connect
 
 Process:
-- Processor: SparkleUpdateInfoProvider
-  Arguments:
-    appcast_url: https://sparkle.extensis.com/u/ST/EN/suitcase26en.xml
+  - Processor: URLTextSearcher
+    Arguments:
+      re_pattern: "http[^\"]*ec-[^\"]*\.dmg"
+      url: https://sparkle.extensis.com/u/ST/EN/suitcase26en.xml
 
 - Processor: URLDownloader
   Arguments:
