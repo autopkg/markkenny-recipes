@@ -1,0 +1,11 @@
+Comment: Written by MK 2024 12 09 - learning every day
+Description: Packages the latest downloaded version of Extensis Connect. (Formally Connect Fonts).
+Identifier: com.github.markkenny.autopkg.pkg.ExtensisConnect
+ParentRecipe: com.github.markkenny.autopkg.download.ExtensisConnect
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Extensis Connect
+
+Process:
+- Processor: AppPkgCreator
