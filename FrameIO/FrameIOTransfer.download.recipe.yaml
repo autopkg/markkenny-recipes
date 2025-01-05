@@ -1,7 +1,7 @@
 Comment: Created by MK 2024 11 26 Struggling
 Description: Downloads the latest Frame IO
 Identifier: com.github.markkenny.autopkg.download.frameiotransfer
-MinimumVersion: 2.3
+MinimumVersion: '2.3'
 
 Input:
   NAME: FrameIO Transfer
