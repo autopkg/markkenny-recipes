@@ -1,5 +1,5 @@
 Identifier: com.github.markkenny.autopkg.download.cisco-webex-universal
-Description: Downloads both Apple Silicon and Intel DMGs for Cisco Webex 
+Description: Downloads both Apple Silicon and Intel DMGs for Cisco Webex
 Input:
   INTEL_ARCH: x64
   INTEL_TYPE: WebexTeamsDesktop-MACOS-Gold

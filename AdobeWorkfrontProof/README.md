@@ -16,7 +16,7 @@ https://assets.proofhq.com/nativeviewer/desktop_viewer/Workfront+Proof-2.1.32.pk
 (https://assets\.proofhq\.com/nativeviewer/desktop_viewer/Workfront\+Proof-.*?\.pkg)
 
 # 2024 10 06
-Download errors. 
+Download errors.
 
 URL to download has changed. Moving to a curl download.
 
