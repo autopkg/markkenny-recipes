@@ -1,6 +1,7 @@
 Description: Packages the current version of LucidLink. The new KEXTLESS version!!!
-Identifier: com.github.markkenny.autopkg.download.lucidlink
 Identifier: com.github.markkenny.autopkg.pkg.lucidlink
+ParentRecipe: com.github.markkenny.autopkg.download.lucidlink
+
 MinimumVersion: "2.3"
 
 Input:
