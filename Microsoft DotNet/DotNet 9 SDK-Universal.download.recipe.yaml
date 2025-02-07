@@ -20,7 +20,7 @@ Process:
     Arguments:
       url: https://dotnet.microsoft.com%SEARCH_URL%
       result_output_var_name: DOWNLOAD_URL
-      re_pattern: href=\"(https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/dotnet-sdk-9.([0-9]+(\.[0-9]+)+)-osx-%ARM_ARCH%\.pkg)\"
+      re_pattern: href=\"(https://builds\.dotnet\.microsoft\.com/dotnet/Sdk/9.([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/dotnet-sdk-9.([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-osx-%ARM_ARCH%\.pkg)\"
 
   - Processor: URLDownloader
     Arguments:
@@ -39,7 +39,7 @@ Process:
     Arguments:
       url: https://dotnet.microsoft.com%SEARCH_URL%
       result_output_var_name: DOWNLOAD_URL
-      re_pattern: href=\"(https://download\.visualstudio\.microsoft\.com/download/pr/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)/[A-Za-z0-9]+/dotnet-sdk-9.([0-9]+(\.[0-9]+)+)-osx-%INTEL_ARCH%\.pkg)\"
+      re_pattern: href=\"(https://builds\.dotnet\.microsoft\.com/dotnet/Sdk/9.([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)/dotnet-sdk-9.([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)-osx-%INTEL_ARCH%\.pkg)\"
 
   - Processor: URLDownloader
     Arguments:
