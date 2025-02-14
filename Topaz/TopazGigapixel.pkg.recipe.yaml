@@ -14,17 +14,11 @@ Process:
 
 - Processor: FileFinder
   Arguments:
-    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/TopazGigapixel*/pkg'
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Topaz*.pkg'
 
-- Processor: PkgPayloadUnpacker
+- Processor: PackageInfoVersioner
   Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/downloads/payload'
-    pkg_payload_path: '%found_filename%/Payload'
-
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%RECIPE_CACHE_DIR%/downloads/payload/Topaz Gigapixel AI.app/Contents/Info.plist'
-    plist_version_key: CFBundleShortVersionString
+    package_info_path: '%found_filename%/PackageInfo'
 
 - Processor: PkgCopier
   Arguments:
@@ -35,4 +29,3 @@ Process:
   Arguments:
     path_list:
     - '%RECIPE_CACHE_DIR%/downloads/unpack'
-    - '%RECIPE_CACHE_DIR%/downloads/payload'
