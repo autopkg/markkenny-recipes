@@ -10,18 +10,16 @@ Input:
 Process:
 - Processor: FlatPkgUnpacker
   Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/expanded'
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
     flat_pkg_path: '%pathname%'
 
-- Processor: PkgPayloadUnpacker
+- Processor: FileFinder
   Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/unpack'
-    pkg_payload_path: '%RECIPE_CACHE_DIR%/expanded/Topaz_Photo_AI.pkg/Payload'
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Topaz*.pkg'
 
-- Processor: Versioner
+- Processor: com.github.nmcspadden.shared/PackageInfoVersioner
   Arguments:
-    input_plist_path: '%RECIPE_CACHE_DIR%/unpack/Applications/Topaz Photo AI.app/Contents/Info.plist'
-    plist_version_key: CFBundleShortVersionString
+    package_info_path: '%found_filename%/PackageInfo'
 
 - Processor: PkgCopier
   Arguments:
@@ -31,5 +29,4 @@ Process:
 - Processor: PathDeleter
   Arguments:
     path_list:
-    - '%RECIPE_CACHE_DIR%/expanded'
-    - '%RECIPE_CACHE_DIR%/unpack'
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'
