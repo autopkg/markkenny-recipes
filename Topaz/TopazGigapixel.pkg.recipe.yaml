@@ -16,7 +16,7 @@ Process:
   Arguments:
     pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Topaz*.pkg'
 
-- Processor: PackageInfoVersioner
+- Processor: com.github.nmcspadden.shared/PackageInfoVersioner
   Arguments:
     package_info_path: '%found_filename%/PackageInfo'
 
