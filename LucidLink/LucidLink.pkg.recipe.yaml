@@ -1,0 +1,31 @@
+Description: Downloads the current version of LucidLink. MK 2025 02 25 - New download link - The kextless application!!!
+Identifier: com.github.markkenny.autopkg.pkg.lucidlink
+ParentRecipe: com.github.markkenny.autopkg.download.lucidlink
+MinimumVersion: "2.3"
+
+Input:
+  NAME: LucidLink
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
+    flat_pkg_path: '%pathname%'
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/LucidLink.pkg'
+
+- Processor: com.github.nmcspadden.shared/PackageInfoVersioner
+  Arguments:
+    package_info_path: '%found_filename%/PackageInfo'
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'
