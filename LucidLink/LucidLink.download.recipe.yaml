@@ -7,17 +7,17 @@ Input:
   NAME: LucidLink
 
 Process:
-  - Processor: URLDownloader
-    Arguments:
-      url: "https://www.lucidlink.com/download/new-ll-latest/macos/stable/"
-      filename: '%NAME%.pkg'
+- Processor: URLDownloader
+  Arguments:
+    url: "https://www.lucidlink.com/download/new-ll-latest/macos/stable/"
+    prefetch_filename: true
 
-  - Processor: EndOfCheckPhase
+- Processor: EndOfCheckPhase
 
-  - Processor: CodeSignatureVerifier
-    Arguments:
-      input_path: "%pathname%"
-      expected_authority_names: 
-        - "Developer ID Installer: LucidLink Corp. (Y4KMJPU2B4)"
-        - Developer ID Certification Authority
-        - Apple Root CA
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: "%pathname%"
+    expected_authority_names: 
+      - "Developer ID Installer: LucidLink Corp. (Y4KMJPU2B4)"
+      - Developer ID Certification Authority
+      - Apple Root CA
