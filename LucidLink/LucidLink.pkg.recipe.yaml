@@ -14,7 +14,7 @@ Process:
 
 - Processor: FileFinder
   Arguments:
-    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/LucidLink.pkg'
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Lucid.pkg'
 
 - Processor: com.github.nmcspadden.shared/PackageInfoVersioner
   Arguments:
