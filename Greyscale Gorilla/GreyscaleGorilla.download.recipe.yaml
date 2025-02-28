@@ -13,7 +13,7 @@ Process:
     request_headers:
       user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
       url: 'https://greyscalegorilla.com/studio-download/'
-      re_pattern: 'https:\/\/greyscalegorilla\.com\/large-download\/\?path=Studio\/Greyscalegorilla\.Studio_[^\/]+_universal\.dmg'
+      re_pattern: href=\"(https:\/\/greyscalegorilla\.com\/large-download\/\?path=Studio\/Greyscalegorilla\.Studio_[^\/]+_universal\.dmg\"
       result_output_var_name: DOWNLOAD_URL
 
 - Processor: URLDownloader
