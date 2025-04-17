@@ -1,0 +1,39 @@
+Description: Packages the current version of SketchUp 2025. MK 2025 04 17
+Identifier: com.github.markkenny.autopkg.pkg.sketchup2025
+MinimumVersion: "2.3"
+
+Input:
+  NAME: SketchUp2025
+
+
+ParentRecipe: com.github.markkenny.autopkg.download.sketchup2025
+Process:
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+      pkgdirs:
+        Applications: '0775'
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%pathname%/SketchUp 2025/'
+      destination_path: '%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2025/'
+      overwrite: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/pkgroot/Applications/SketchUp 2025/SketchUp.app/Contents/Info.plist'
+      plist_version_key: CFBundleVersion
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        chown:
+          - path: /
+            user: root
+            group: admin
+        id: com.sketchup.%NAME%-%version%
+        options: purge_ds_store
+        pkgname: '%NAME%-%version%'
+        pkgroot: '%pkgroot%'
+        version: '%version%'
