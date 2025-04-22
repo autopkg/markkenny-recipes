@@ -1,6 +1,7 @@
 Description: Packages the current version of Lucid. MK 2025 03 22
 Identifier: com.github.markkenny.autopkg.pkg.lucid
 ParentRecipe: com.github.markkenny.autopkg.download.lucid
+
 MinimumVersion: "2.3"
 
 Input:

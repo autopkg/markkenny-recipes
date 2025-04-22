@@ -1,5 +1,4 @@
 Description: Downloads the current version of Lucid (The orginal version needing a KEXT). MK 2025 04 22
-
 Identifier: com.github.markkenny.autopkg.download.lucid
 MinimumVersion: "2.3"
 
