@@ -4,7 +4,7 @@ MinimumVersion: "2.3"
 
 Input:
   NAME: LucidLink
-  DOWNLOAD_URL:  "https://www.lucidlink.com/download/new-ll-latest/macos/stable/
+  DOWNLOAD_URL: "https://www.lucidlink.com/download/new-ll-latest/macos/stable/
 
 Process:
 - Processor: URLDownloader
