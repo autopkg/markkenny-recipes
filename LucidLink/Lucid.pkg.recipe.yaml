@@ -6,22 +6,27 @@ MinimumVersion: "2.3"
 
 Input:
   NAME: Lucid
-  DOWNLOAD_URL: https://www.lucidlink.com/download/latest/osx/stable/
 
 Process:
-  - Processor: FlatPkgUnpacker
-    Arguments:
-      destination_path: "%RECIPE_CACHE_DIR%/unpack"
-      flat_pkg_path: "%pathname%"
-  - Processor: PkgPayloadUnpacker
-    Arguments:
-      destination_path: "%RECIPE_CACHE_DIR%/unpack"
-      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpack/Lucid.pkg/Payload"
-  - Processor: Versioner
-    Arguments:
-      input_plist_path: "%RECIPE_CACHE_DIR%/unpack/Lucid.app/Contents/Info.plist"
-      plist_version_key: CFBundleShortVersionString
-  - Processor: PkgCopier
-    Arguments:
-      pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
-      source_pkg: "%pathname%"
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
+    flat_pkg_path: '%pathname%'
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Lucid.pkg'
+
+- Processor: com.github.nmcspadden.shared/PackageInfoVersioner
+  Arguments:
+    package_info_path: '%found_filename%/PackageInfo'
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'

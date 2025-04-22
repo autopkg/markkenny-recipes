@@ -1,6 +1,7 @@
-Description: Downloads the current version of LucidLink. MK 2025 02 25 - New download link - The kextless application!!!
+Description: Packages the current version of LucidLink. MK 2025 02 25 - New download link - The kextless application!!!
 Identifier: com.github.markkenny.autopkg.pkg.lucidlink
 ParentRecipe: com.github.markkenny.autopkg.download.lucidlink
+
 MinimumVersion: "2.3"
 
 Input:
