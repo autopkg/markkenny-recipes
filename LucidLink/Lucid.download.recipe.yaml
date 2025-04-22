@@ -4,12 +4,11 @@ MinimumVersion: "2.3"
 
 Input:
   NAME: Lucid
-  DOWNLOAD_URL: "https://www.lucidlink.com/download/latest/osx/stable/""
 
 Process:
   - Processor: URLDownloader
     Arguments:
-      url: "%DOWNLOAD_URL%"
+      url: "https://www.lucidlink.com/download/latest/osx/stable/"
       filename: "%NAME%.pkg"
 
   - Processor: EndOfCheckPhase
