@@ -1,7 +1,11 @@
 # NOTES
 
-Using https://sparkle.extensis.com/u/ST/EN/suitcase25en.xml to download.
+# Connect Fonts EOL?
+The [URL](http://bin.extensis.com/sf-26.0.5-m-all.dmg) to download Connect Fonts 26.0.5 is now failing. I think it's been EOL'd and Extensis Connect is the main product, but I'm waiting on Extensis to confirm. 
 
+
+# Sparkle! 
+Using https://sparkle.extensis.com/u/ST/EN/suitcase25en.xml to download.
 I think this changes when version changes.
 
 # 2024 10 15
