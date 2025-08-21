@@ -10,6 +10,7 @@ Process:
   Arguments:
     github_repo: LUMESCA/calibrite-profiler-releases
     release_id: "latest"
+    asset_regex: ^calibrite-PROFILER.*?dmg$
 
 - Processor: URLDownloader
   Arguments:
