@@ -1,0 +1,16 @@
+Description: Download the latest release of CalibratePROFILER
+Identifier: com.github.markkenny.autopkg.download.calibrateprofiler
+MinimumVersion: "2.3"
+
+Input:
+  NAME: CalibratePROFILER
+
+Process:
+- Processor: GitHubReleasesInfoProvider
+  Arguments:
+    github_repo: LUMESCA/calibrite-profiler-releases/releases
+    release_id: "latest"
+
+- Processor: URLDownloader
+  Arguments:
+    filename: CalibratePROFILER-%version%.dmg
