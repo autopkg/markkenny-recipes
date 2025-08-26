@@ -1,5 +1,5 @@
 Description: Packages the latest download of Autodesk RV
-Identifier: com.github.markkenny.autopkg.okg.autodesk-rv
+Identifier: com.github.markkenny.autopkg.pkg.autodesk-rv
 ParentRecipe: com.github.markkenny.autopkg.download.autodesk-rv
 
 MinimumVersion: "2.3"
