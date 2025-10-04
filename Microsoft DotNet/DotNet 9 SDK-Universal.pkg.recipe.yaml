@@ -52,14 +52,14 @@ Process:
   Arguments:
     file_content: |
       #!/bin/bash
-      
+
       # Determine working directory
       installDir=$(dirname $0)
-      
+
       # Identify installer package names
       Intel_package="%NAME%-INTEL-%version%.pkg"
       Apple_Silicon_package="%NAME%-ARM-%version%.pkg"
-      
+
       # Determine if this Mac has an Intel or Apple Silicon processor
       processor=$( /usr/bin/arch | grep -o "arm64")
       if [[ -n "$processor" ]]; then
@@ -67,7 +67,7 @@ Process:
       else
       /usr/sbin/installer -pkg "$Intel_package" -target "$3"
       fi
-      
+
       exit 0"
     file_mode: "0755"
     file_path: "%RECIPE_CACHE_DIR%/Universal/scripts/preinstall"
@@ -76,13 +76,12 @@ Process:
   Arguments:
     pkg_request:
       id: com.omnicom-group.dotnet8sdk-universal
-      options: purge_ds_store
       pkgname: "%NAME%-Universal-%version%"
       scripts: "%RECIPE_CACHE_DIR%/Universal/scripts"
       version: "%version%"
 
 - Processor: PathDeleter
   Arguments:
-    path_list: 
+    path_list:
     - '%RECIPE_CACHE_DIR%/unpacked'
     - '%RECIPE_CACHE_DIR%/Universal'
