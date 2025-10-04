@@ -7,7 +7,25 @@ Input:
   NAME: Topaz Gigapixel
 
 Process:
-- Processor: AppPkgCreator
+- Processor: FlatPkgUnpacker
   Arguments:
-    app_path: '%pathname%/Topaz Gigapixel AI.app'
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
+    flat_pkg_path: '%pathname%'
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Topaz*.pkg'
+
+- Processor: com.github.nmcspadden.shared/PackageInfoVersioner
+  Arguments:
+    package_info_path: '%found_filename%/PackageInfo'
+
+- Processor: PkgCopier
+  Arguments:
     pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'

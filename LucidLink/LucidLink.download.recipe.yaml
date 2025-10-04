@@ -1,26 +1,15 @@
-Description: Downloads the current version of LucidLink. MK 2024 11 08 - The kextless application!!!
-
+Description: Downloads the current version of LucidLink. MK 2025 02 25 - New download link - The kextless application!!!
 Identifier: com.github.markkenny.autopkg.download.lucidlink
 MinimumVersion: "2.3"
 
 Input:
   NAME: LucidLink
-  SEARCH_URL: https://www.lucidlink.com/download
-  SEARCH_PATTERN: lucidlink-[0-9\.]*.pkg
-  DOWNLOAD_URL: https://releases.lucidlink.com/prod/macos
 
 Process:
-  - Processor: URLTextSearcher
-    Arguments:
-      re_pattern: "%SEARCH_PATTERN%"
-      url: "%SEARCH_URL%"
-
-  - Processor: URLDownloader
-    Arguments:
-      url: "%DOWNLOAD_URL%/%match%"
-      filename: "%NAME%.pkg"
-
-  - Processor: EndOfCheckPhase
+- Processor: URLDownloader
+  Arguments:
+    url: "https://www.lucidlink.com/download/new-ll-latest/macos/stable/"
+    filename: '%NAME%.pkg'
 
   - Processor: CodeSignatureVerifier
     Arguments:

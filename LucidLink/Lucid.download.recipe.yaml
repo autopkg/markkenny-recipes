@@ -1,0 +1,22 @@
+Description: Downloads the current version of Lucid (The orginal version needing a KEXT). MK 2025 04 22
+Identifier: com.github.markkenny.autopkg.download.lucid
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Lucid
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      url: "https://www.lucidlink.com/download/latest/osx/stable/"
+      filename: "%NAME%.pkg"
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: "%pathname%"
+      expected_authority_names: 
+       - "Developer ID Installer: LucidLink Corp. (Y4KMJPU2B4)"
+       - Developer ID Certification Authority
+       - Apple Root CA

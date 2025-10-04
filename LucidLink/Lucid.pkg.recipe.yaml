@@ -1,11 +1,11 @@
-Comment: Created by MK 2023 12 19
-Description: Downloads the latest version of Topaz Photo AI and creates a versionsed package.
-Identifier: com.github.markkenny.autopkg.pkg.topaz-photo-ai
-ParentRecipe: com.github.markkenny.autopkg.download.topaz-photo-ai
+Description: Packages the current version of Lucid. MK 2025 03 22
+Identifier: com.github.markkenny.autopkg.pkg.lucid
+ParentRecipe: com.github.markkenny.autopkg.download.lucid
+
 MinimumVersion: "2.3"
 
 Input:
-  NAME: Topaz Photo AI
+  NAME: Lucid
 
 Process:
 - Processor: FlatPkgUnpacker
@@ -15,7 +15,7 @@ Process:
 
 - Processor: FileFinder
   Arguments:
-    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Topaz*.pkg'
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/Lucid.pkg'
 
 - Processor: com.github.nmcspadden.shared/PackageInfoVersioner
   Arguments:

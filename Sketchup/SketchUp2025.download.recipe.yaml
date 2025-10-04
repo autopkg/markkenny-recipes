@@ -1,0 +1,55 @@
+Description: Downloads the current version of SketchUp 2025. MK 2025 02 25 - New download link - The kextless application!!!
+Identifier: com.github.markkenny.autopkg.download.sketchup2025
+MinimumVersion: "2.3"
+
+Input:
+  NAME: SketchUp2025
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      url: https://help.sketchup.com/en/downloading-sketchup
+      CHECK_FILESIZE_ONLY: true
+      request_headers:
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        Sec-Fetch-Mode: navigate
+        Sec-Fetch-Site: none
+
+  - Processor: URLTextSearcher
+    Arguments:
+      re_pattern: 'href=\"(https://download\.sketchup\.com/SketchUp-2025-([0-9]+(-[0-9]+)+)\.dmg)\"'
+      result_output_var_name: DOWNLOAD_URL
+      url: https://help.sketchup.com/en/downloading-sketchup
+      curl_opts:
+        - --cookie-jar
+        - '%RECIPE_CACHE_DIR%/cookies.txt'
+        - --cookie
+        - '%RECIPE_CACHE_DIR%/cookies.txt'
+      request_headers:
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        Sec-Fetch-Mode: navigate
+        Sec-Fetch-Site: none
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%.dmg'
+      url: '%DOWNLOAD_URL%'
+      curl_opts:
+        - --cookie
+        - '%RECIPE_CACHE_DIR%/cookies.txt'
+      request_headers:
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/SketchUp 2025/LayOut.app'
+      requirement: anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/SketchUp 2025/SketchUp.app'
+      requirement: anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J8PVMCY7KL)

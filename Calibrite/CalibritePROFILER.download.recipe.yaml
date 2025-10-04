@@ -1,0 +1,24 @@
+Description: Download the latest release of calibrate PROFILER
+Identifier: com.github.markkenny.autopkg.download.calibriteprofiler
+MinimumVersion: "2.3"
+
+Input:
+  NAME: CalibritePROFILER
+
+Process:
+- Processor: GitHubReleasesInfoProvider
+  Arguments:
+    github_repo: LUMESCA/calibrite-profiler-releases
+    release_id: "latest"
+    asset_regex: ^calibrite-PROFILER.*?dmg$
+
+- Processor: URLDownloader
+  Arguments:
+    filename: CalibratePROFILER.dmg
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/calibrite PROFILER.app'
+    requirement: identifier "com.calibrite.profiler" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "5C392763F5"

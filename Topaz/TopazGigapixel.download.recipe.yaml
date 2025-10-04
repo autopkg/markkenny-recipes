@@ -1,4 +1,4 @@
-Comment: Created by MK 2023 05 05
+Comment: Created by MK 2024 02 14 - New downl,oad link
 Description: Downloads the latest version of Topaz GigaPixel.
 Identifier: com.github.markkenny.autopkg.download.topaz-gigapixel
 MinimumVersion: "2.3"
@@ -9,17 +9,15 @@ Input:
 Process:
 - Processor: URLDownloader
   Arguments:
-    filename: '%NAME%.dmg'
-    url: https://downloads.topazlabs.com/deploy/TopazGigapixelAI/latest/TopazGigapixelAI-Full-Installer.dmg
+    url: "https://topazlabs.com/d/gigapixel/latest/mac/full"
+    prefetch_filename: true
 
 - Processor: EndOfCheckPhase
 
 - Processor: CodeSignatureVerifier
   Arguments:
-    input_path: '%pathname%/Topaz Gigapixel AI.app'
-    requirement: identifier "com.topazlabs.TopazGigapixelAI" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3G3JE37ZHF"
-
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%pathname%/Topaz Gigapixel AI.app/Contents/Info.plist'
-    plist_version_key: CFBundleShortVersionString
+    input_path: "%pathname%"
+    expected_authority_names:
+      - "Developer ID Installer: Topaz Labs, LLC (3G3JE37ZHF)"
+      - "Developer ID Certification Authority"
+      - "Apple Root CA"
