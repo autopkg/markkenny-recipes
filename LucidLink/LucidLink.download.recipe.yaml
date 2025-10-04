@@ -16,5 +16,5 @@ Process:
       input_path: "%pathname%"
       expected_authority_names:
         - "Developer ID Installer: LucidLink Corp. (Y4KMJPU2B4)"
-        - Developer ID Certification Authority
-        - Apple Root CA
+        - "Developer ID Certification Authority"
+        - "Apple Root CA"
