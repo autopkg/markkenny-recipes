@@ -34,7 +34,6 @@ Process:
         path: private/tmp
         user: root
       id: com.github.karakun.openwebstart
-      options: purge_ds_store
       pkgdir: '%RECIPE_CACHE_DIR%'
       pkgname: '%NAME%-%ARCH%-%version%'
       scripts: scripts
