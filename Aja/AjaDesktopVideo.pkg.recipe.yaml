@@ -1,0 +1,13 @@
+Description: Packages the latest AJA Desktop Software 2025 10 25
+Identifier: com.github.markkenny.autopkg.pkg.ajadesktopvideo
+ParentRecipe: com.github.markkenny.autopkg.download.ajadesktopvideo
+
+MinimumVersion: "2.3"
+
+Input:
+  NAME: AJA Desktop Video
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    pkg_path: '%PKG_PATH%'

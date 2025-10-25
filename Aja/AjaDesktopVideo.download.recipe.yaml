@@ -1,0 +1,46 @@
+Description: Downloads the latest AJA Desktop Software 2025 10 25
+Identifier: com.github.markkenny.autopkg.download.ajadesktopvideo
+
+MinimumVersion: "2.3"
+
+Input:
+  NAME: AJA Desktop Video
+
+Process:
+
+- Processor: URLTextSearcher
+  Arguments:
+    request_headers:
+      user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
+    url: 'https://www.aja.com/products/io-4k-plus#support'
+    re_pattern: 'href="(https://www\.aja\.com/assets/support/files/[^/"]+/AJA-Software-Installer_macOS_[^"_]+_Release\.zip)"'
+    result_output_var_name: DOWNLOAD_URL
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.zip'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: Unarchiver
+  Arguments:
+      archive_path: "%pathname%"
+      destination_path: "%RECIPE_CACHE_DIR%/unzip"
+      purge_destination: false
+      archive_format: zip
+
+- Processor: FileFinder
+  Arguments:
+    match_pattern: ^AJA_Mac_Retail.*\.pkg$
+    search_path: "%RECIPE_CACHE_DIR%/unzip"
+    find_type: file
+    result_output_var_name: PKG_PATH
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: "%PKG_PATH%"
+    expected_authority_names:
+      - "Developer ID Installer: AJA Video Systems (9VB857J7CD)"
+      - Developer ID Certification Authority
+      - Apple Root CA
