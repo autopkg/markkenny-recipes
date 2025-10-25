@@ -13,8 +13,18 @@ Process:
     request_headers:
       user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
     url: 'https://www.aja.com/products/io-4k-plus#support'
-    re_pattern: 'href="(https://www\.aja\.com/assets/support/files/[^/"]+/AJA-Software-Installer_macOS_[^"_]+_Release\.zip)"'
-    result_output_var_name: DOWNLOAD_URL
+    re_pattern: '<a[^>]+data-file="([0-9]+)"[^>]+data-lang="([a-z]+)"[^>]+data-path="(AJA-Software-Installer_macOS_[^"]+_Release\.zip)"'
+    result_output_var_name: FILE_INFO
+
+- Processor: Python
+  Arguments:
+    input_variables:
+      - FILE_INFO
+    output_variables:
+      - DOWNLOAD_URL
+    script: |
+      file_number, language, filename = FILE_INFO[0]
+      DOWNLOAD_URL = f"https://www.aja.com/assets/support/files/{file_number}/{language}/{filename}"
 
 - Processor: URLDownloader
   Arguments:
