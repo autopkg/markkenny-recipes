@@ -1,11 +1,15 @@
 Description: Download the latest release of the OpenWebStart installer from GitHub. Taken from NStraus and added platform
 Identifier: com.github.markkenny.autopkg.download.OpenWebStart
-MinimumVersion: "1.0"
+MinimumVersion: "2.3"
 
 Input:
   NAME: OpenWebStart
 
 Process:
+- Processor: DeprecationWarning
+  Arguments:
+    warning_message: Consider switching to the OpenWebStart recipes in the nstrauss-recipes repo. This recipe is deprecated and will be removed in the future.
+
 - Processor: GitHubReleasesInfoProvider
   Arguments:
     asset_regex: ^.*(macos-%ARCH%).*$
