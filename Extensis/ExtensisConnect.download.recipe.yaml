@@ -1,4 +1,4 @@
-Description: Downloads the latest version of Extensis Connect. Renamed.
+Description: Downloads the latest version of Extensis Connect. Updated for v28.
 Identifier: com.github.markkenny.autopkg.download.ExtensisConnect
 MinimumVersion: "2.3"
 
@@ -8,7 +8,7 @@ Input:
 Process:
 - Processor: SparkleUpdateInfoProvider
   Arguments:
-    appcast_url: https://sparkle.extensis.com/u/ST/EN/suitcase27en.xml
+    appcast_url: https://sparkle.extensis.com/u/ST/EN/suitcase28en.xml
 
 - Processor: URLDownloader
   Arguments:
