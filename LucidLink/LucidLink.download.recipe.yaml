@@ -11,6 +11,8 @@ Process:
     url: "https://www.lucidlink.com/download/new-ll-latest/macos/stable/"
     filename: '%NAME%.pkg'
 
+- Processor: EndOfCheckPhase
+
 - Processor: CodeSignatureVerifier
   Arguments:
     input_path: "%pathname%"
