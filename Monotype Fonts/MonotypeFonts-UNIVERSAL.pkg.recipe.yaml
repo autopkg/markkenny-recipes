@@ -6,7 +6,6 @@ MinimumVersion: "2.3"
 
 Input:
   NAME: Monotype Fonts
-  WRAPPER_NAME: Monotype Fonts-UNIVERSAL
 
 Process:
   # Unpack ARM installer to extract version
@@ -44,13 +43,13 @@ Process:
     Arguments:
       overwrite: false
       source_path: '%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg'
-      destination_path: "%RECIPE_CACHE_DIR%/Universal/scripts/%NAME%-ARM-%version%.pkg"
+      destination_path: "%RECIPE_CACHE_DIR%/Universal/pkgroot/%NAME%-ARM-%version%.pkg"
 
   - Processor: Copier
     Arguments:
       overwrite: false
       source_path: '%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg'
-      destination_path: "%RECIPE_CACHE_DIR%/Universal/scripts/%NAME%-INTEL-%version%.pkg"
+      destination_path: "%RECIPE_CACHE_DIR%/Universal/pkgroot/%NAME%-INTEL-%version%.pkg"
 
   # Create preinstall script for architecture detection
   - Processor: FileCreator
@@ -82,7 +81,7 @@ Process:
     Arguments:
       pkg_request:
         id: com.monotype.fonts-universal
-        pkgname: "%WRAPPER_NAME%-%version%"
+        pkgname: "%NAME%-Universal-%version%"
         scripts: "%RECIPE_CACHE_DIR%/Universal/scripts"
         version: "%version%"
 
