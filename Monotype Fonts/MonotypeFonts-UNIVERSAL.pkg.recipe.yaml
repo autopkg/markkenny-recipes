@@ -6,6 +6,7 @@ MinimumVersion: "2.3"
 
 Input:
   NAME: Monotype Fonts
+  WRAPPER_NAME: Monotype Fonts-UNIVERSAL
 
 Process:
   # Unpack ARM installer to extract version
@@ -81,7 +82,7 @@ Process:
     Arguments:
       pkg_request:
         id: com.monotype.fonts-universal
-        pkgname: "%NAME%-Universal-%version%"
+        pkgname: "%WRAPPER_NAME%-%version%"
         scripts: "%RECIPE_CACHE_DIR%/Universal/scripts"
         version: "%version%"
 
@@ -96,4 +97,3 @@ Process:
         - '%RECIPE_CACHE_DIR%/unzip_arm'
 
 
-        
