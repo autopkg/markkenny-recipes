@@ -1,61 +1,100 @@
-Description: Packages the current release version of Monotype Fonts (Universal)
+Description: Packages both ARM and INTEL versions of Monotype Fonts (Universal)
 Identifier: com.github.markkenny.autopkg.pkg.monotypefonts-universal
-MinimumVersion: "2.3"
-
 ParentRecipe: com.github.markkenny.autopkg.download.monotypefonts-universal
+
+MinimumVersion: "2.3"
 
 Input:
   NAME: Monotype Fonts
 
 Process:
-  # Extract version from Intel package (both should be identical)
+  # Extract version from ARM package
   - Processor: FlatPkgUnpacker
     Arguments:
-      destination_path: "%RECIPE_CACHE_DIR%/unpkg_intel"
-      flat_pkg_path: "%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg"
-      purge_destination: false
+      destination_path: '%RECIPE_CACHE_DIR%/unpacked'
+      flat_pkg_path: '%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg'
+      purge_destination: true
 
-  - Processor: PkgPayloadUnpacker
+  # Escape spaces in Distribution file URL
+  - Processor: com.github.homebysix.FindAndReplace/FindAndReplace
     Arguments:
-      destination_path: "%RECIPE_CACHE_DIR%/unpkg_intel_payload"
-      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpkg_intel/DTAppInstaller.pkg/Payload"
-      purge_destination: false
+      find: ' '
+      input_string: 'file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution'
+      replace: '%20'
 
-  - Processor: Versioner
+  # Extract version from Distribution XML
+  - Processor: URLTextSearcher
     Arguments:
-      input_plist_path: "%RECIPE_CACHE_DIR%/unpkg_intel_payload/Monotype Fonts/Application/Monotype Fonts.app/Contents/Info.plist"
-      plist_version_key: "CFBundleShortVersionString"
+      re_pattern: '<title>Monotype Fonts (\d+\.\d+\.\d+) \([^\)]+\)</title>'
+      result_output_var_name: version
+      url: '%output_string%'
 
-  # Extract ARM package payload
-  - Processor: FlatPkgUnpacker
+  # Create directory structure
+  - Processor: PkgRootCreator
     Arguments:
-      destination_path: "%RECIPE_CACHE_DIR%/unpkg_arm"
-      flat_pkg_path: "%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg"
-      purge_destination: false
+      pkgdirs: {}
+      pkgroot: "%RECIPE_CACHE_DIR%/Universal/pkgroot"
 
-  - Processor: PkgPayloadUnpacker
+  - Processor: PkgRootCreator
     Arguments:
-      destination_path: "%RECIPE_CACHE_DIR%/unpkg_arm_payload"
-      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpkg_arm/DTAppInstaller.pkg/Payload"
-      purge_destination: false
+      pkgdirs: {}
+      pkgroot: "%RECIPE_CACHE_DIR%/Universal/scripts"
 
-  # Copy the Intel version as the base
-  - Processor: PkgCopier
+  # Copy both architecture packages
+  - Processor: Copier
     Arguments:
-      pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
-      source_pkg: "%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg"
+      overwrite: false
+      source_path: '%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg'
+      destination_path: "%RECIPE_CACHE_DIR%/Universal/scripts/%NAME%-ARM-%version%.pkg"
 
-  # Clean up
+  - Processor: Copier
+    Arguments:
+      overwrite: false
+      source_path: '%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg'
+      destination_path: "%RECIPE_CACHE_DIR%/Universal/scripts/%NAME%-INTEL-%version%.pkg"
+
+  # Create preinstall script for architecture detection
+  - Processor: FileCreator
+    Arguments:
+      file_content: |
+        #!/bin/bash
+
+        # Determine working directory
+        installDir=$(dirname $0)
+
+        # Identify installer package names
+        Intel_package="%NAME%-INTEL-%version%.pkg"
+        Apple_Silicon_package="%NAME%-ARM-%version%.pkg"
+
+        # Determine if this Mac has an Intel or Apple Silicon processor
+        processor=$( /usr/bin/arch | grep -o "arm64")
+        if [[ -n "$processor" ]]; then
+          /usr/sbin/installer -pkg "$Apple_Silicon_package" -target "$3"
+        else
+          /usr/sbin/installer -pkg "$Intel_package" -target "$3"
+        fi
+
+        exit 0
+      file_mode: "0755"
+      file_path: "%RECIPE_CACHE_DIR%/Universal/scripts/preinstall"
+
+  # Create universal wrapper package
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: com.monotype.fonts-universal
+        pkgname: "%NAME%-Universal-%version%"
+        scripts: "%RECIPE_CACHE_DIR%/Universal/scripts"
+        version: "%version%"
+
+  # Cleanup
   - Processor: PathDeleter
     Arguments:
       path_list:
-        - '%RECIPE_CACHE_DIR%/unpkg_intel'
-        - '%RECIPE_CACHE_DIR%/unpkg_intel_payload'
-        - '%RECIPE_CACHE_DIR%/unpkg_arm'
-        - '%RECIPE_CACHE_DIR%/unpkg_arm_payload'
+        - '%RECIPE_CACHE_DIR%/unpacked'
+        - '%RECIPE_CACHE_DIR%/Universal'
         - '%RECIPE_CACHE_DIR%/unzip_intel'
         - '%RECIPE_CACHE_DIR%/unzip_arm'
-        - '%RECIPE_CACHE_DIR%/MTFInstallerIntel.zip'
-        - '%RECIPE_CACHE_DIR%/MTFInstallerArm.zip'
 
 
+        
