@@ -5,7 +5,6 @@ MinimumVersion: "2.3"
 Input:
   NAME: Monotype Fonts
   SEARCH_URL: https://support.monotype.com/en/articles/7859096-syncing-and-installing-fonts-with-monotype-app
-  # Pattern to extract the release number
   VERSION_PATTERN: 'https://monotypeapp\.monotype\.com/release/([^/]+)/mac'
 
 Process:
@@ -18,11 +17,10 @@ Process:
     Arguments:
       url: "https://monotypeapp.monotype.com/release/%match%/mac/intel/MTFInstallerMacOsIntel.zip"
       filename: "MTFInstallerIntel.zip"
-      destination_path: "%RECIPE_CACHE_DIR%"
 
   - Processor: Unarchiver
     Arguments:
-      archive_path: "%RECIPE_CACHE_DIR%/MTFInstallerIntel.zip"
+      archive_path: "%pathname%"
       destination_path: "%RECIPE_CACHE_DIR%/unzip_intel"
       purge_destination: false
       archive_format: zip
@@ -31,11 +29,10 @@ Process:
     Arguments:
       url: "https://monotypeapp.monotype.com/release/%match%/mac/arm/MTFInstallerMacOsArm.zip"
       filename: "MTFInstallerArm.zip"
-      destination_path: "%RECIPE_CACHE_DIR%"
 
   - Processor: Unarchiver
     Arguments:
-      archive_path: "%RECIPE_CACHE_DIR%/MTFInstallerArm.zip"
+      archive_path: "%pathname%"
       destination_path: "%RECIPE_CACHE_DIR%/unzip_arm"
       purge_destination: false
       archive_format: zip
@@ -58,3 +55,5 @@ Process:
 
   - Processor: EndOfCheckPhase
 
+
+  
