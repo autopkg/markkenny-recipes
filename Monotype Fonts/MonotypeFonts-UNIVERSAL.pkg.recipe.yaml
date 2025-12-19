@@ -1,0 +1,61 @@
+Description: Packages the current release version of Monotype Fonts (Universal)
+Identifier: com.github.markkenny.autopkg.pkg.monotypefonts-universal
+MinimumVersion: "2.3"
+
+ParentRecipe: com.github.markkenny.autopkg.download.monotypefonts-universal
+
+Input:
+  NAME: Monotype Fonts
+
+Process:
+  # Extract version from Intel package (both should be identical)
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpkg_intel"
+      flat_pkg_path: "%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg"
+      purge_destination: false
+
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpkg_intel_payload"
+      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpkg_intel/DTAppInstaller.pkg/Payload"
+      purge_destination: false
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%RECIPE_CACHE_DIR%/unpkg_intel_payload/Monotype Fonts/Application/Monotype Fonts.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"
+
+  # Extract ARM package payload
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpkg_arm"
+      flat_pkg_path: "%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg"
+      purge_destination: false
+
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpkg_arm_payload"
+      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpkg_arm/DTAppInstaller.pkg/Payload"
+      purge_destination: false
+
+  # Copy the Intel version as the base
+  - Processor: PkgCopier
+    Arguments:
+      pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
+      source_pkg: "%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg"
+
+  # Clean up
+  - Processor: PathDeleter
+    Arguments:
+      path_list:
+        - '%RECIPE_CACHE_DIR%/unpkg_intel'
+        - '%RECIPE_CACHE_DIR%/unpkg_intel_payload'
+        - '%RECIPE_CACHE_DIR%/unpkg_arm'
+        - '%RECIPE_CACHE_DIR%/unpkg_arm_payload'
+        - '%RECIPE_CACHE_DIR%/unzip_intel'
+        - '%RECIPE_CACHE_DIR%/unzip_arm'
+        - '%RECIPE_CACHE_DIR%/MTFInstallerIntel.zip'
+        - '%RECIPE_CACHE_DIR%/MTFInstallerArm.zip'
+
+

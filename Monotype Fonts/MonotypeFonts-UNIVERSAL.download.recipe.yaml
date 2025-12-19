@@ -1,0 +1,61 @@
+Description: Downloads the latest Monotype Fonts (Universal - ARM & Intel). MK 2024 12 19
+Identifier: com.github.markkenny.autopkg.download.monotypefonts-universal
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Monotype Fonts
+  SEARCH_URL: https://support.monotype.com/en/articles/7859096-syncing-and-installing-fonts-with-monotype-app
+  # Pattern to extract the release number
+  VERSION_PATTERN: 'https://monotypeapp\.monotype\.com/release/([^/]+)/mac'
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      re_pattern: "%VERSION_PATTERN%"
+      url: "%SEARCH_URL%"
+      result_output_variable_name: release_number
+
+  - Processor: URLDownloader
+    Arguments:
+      url: "https://monotypeapp.monotype.com/release/%release_number%/mac/intel/MTFInstallerMacOsIntel.zip"
+      filename: "MTFInstallerIntel.zip"
+      destination_path: "%RECIPE_CACHE_DIR%"
+
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: "%RECIPE_CACHE_DIR%/MTFInstallerIntel.zip"
+      destination_path: "%RECIPE_CACHE_DIR%/unzip_intel"
+      purge_destination: false
+      archive_format: zip
+
+  - Processor: URLDownloader
+    Arguments:
+      url: "https://monotypeapp.monotype.com/release/%release_number%/mac/arm/MTFInstallerMacOsArm.zip"
+      filename: "MTFInstallerArm.zip"
+      destination_path: "%RECIPE_CACHE_DIR%"
+
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: "%RECIPE_CACHE_DIR%/MTFInstallerArm.zip"
+      destination_path: "%RECIPE_CACHE_DIR%/unzip_arm"
+      purge_destination: false
+      archive_format: zip
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: "%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg"
+      expected_authority_names:
+        - "Developer ID Installer: Monotype Imaging (9TY7K37N87)"
+        - Developer ID Certification Authority
+        - Apple Root CA
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: "%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg"
+      expected_authority_names:
+        - "Developer ID Installer: Monotype Imaging (9TY7K37N87)"
+        - Developer ID Certification Authority
+        - Apple Root CA
+
+  - Processor: EndOfCheckPhase
+
