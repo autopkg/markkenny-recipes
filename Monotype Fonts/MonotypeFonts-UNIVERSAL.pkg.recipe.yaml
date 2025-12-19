@@ -38,7 +38,7 @@ Process:
       pkgdirs: {}
       pkgroot: "%RECIPE_CACHE_DIR%/Universal/scripts"
 
-  # Copy both architecture packages
+# Copy both architecture packages to pkgroot
   - Processor: Copier
     Arguments:
       overwrite: false
@@ -51,18 +51,19 @@ Process:
       source_path: '%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg'
       destination_path: "%RECIPE_CACHE_DIR%/Universal/pkgroot/%NAME%-INTEL-%version%.pkg"
 
-  # Create preinstall script for architecture detection
+# Create preinstall script for architecture detection
   - Processor: FileCreator
     Arguments:
       file_content: |
         #!/bin/bash
 
         # Determine working directory
-        installDir=$(dirname $0)
+        scriptDir=$(cd "$(dirname "$0")"; pwd)
+        pkgRootDir=$(dirname "$scriptDir")
 
         # Identify installer package names
-        Intel_package="%NAME%-INTEL-%version%.pkg"
-        Apple_Silicon_package="%NAME%-ARM-%version%.pkg"
+        Intel_package="$pkgRootDir/%NAME%-INTEL-%version%.pkg"
+        Apple_Silicon_package="$pkgRootDir/%NAME%-ARM-%version%.pkg"
 
         # Determine if this Mac has an Intel or Apple Silicon processor
         processor=$( /usr/bin/arch | grep -o "arm64")
