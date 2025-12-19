@@ -1,5 +1,5 @@
 Description: Downloads the latest Monotype Fonts (Universal - ARM & Intel). MK 2024 12 19
-Identifier: com.github.markkenny.autopkg.download.monotypefonts
+Identifier: com.github.markkenny.autopkg.download.monotypefonts-universal
 MinimumVersion: "2.3"
 
 Input:
@@ -58,4 +58,3 @@ Process:
 
   - Processor: EndOfCheckPhase
 
-  
