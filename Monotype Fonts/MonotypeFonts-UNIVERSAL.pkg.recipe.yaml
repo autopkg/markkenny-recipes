@@ -8,26 +8,24 @@ Input:
   NAME: Monotype Fonts
 
 Process:
-  # Extract version from ARM package
+  # Unpack ARM installer to extract version
   - Processor: FlatPkgUnpacker
     Arguments:
-      destination_path: '%RECIPE_CACHE_DIR%/unpacked'
+      destination_path: '%RECIPE_CACHE_DIR%/unpacked_arm'
       flat_pkg_path: '%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg'
       purge_destination: true
 
-  # Escape spaces in Distribution file URL
-  - Processor: com.github.homebysix.FindAndReplace/FindAndReplace
+  - Processor: PkgPayloadUnpacker
     Arguments:
-      find: ' '
-      input_string: 'file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution'
-      replace: '%20'
+      destination_path: '%RECIPE_CACHE_DIR%/unpacked_arm_payload'
+      pkg_payload_path: '%RECIPE_CACHE_DIR%/unpacked_arm/DTAppInstaller.pkg/Payload'
+      purge_destination: false
 
-  # Extract version from Distribution XML
-  - Processor: URLTextSearcher
+  # Extract version from Info.plist
+  - Processor: Versioner
     Arguments:
-      re_pattern: '<title>Monotype Fonts (\d+\.\d+\.\d+) \([^\)]+\)</title>'
-      result_output_var_name: version
-      url: '%output_string%'
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpacked_arm_payload/Monotype Fonts/Application/Monotype Fonts.app/Contents/Info.plist'
+      plist_version_key: "CFBundleShortVersionString"
 
   # Create directory structure
   - Processor: PkgRootCreator
@@ -91,7 +89,8 @@ Process:
   - Processor: PathDeleter
     Arguments:
       path_list:
-        - '%RECIPE_CACHE_DIR%/unpacked'
+        - '%RECIPE_CACHE_DIR%/unpacked_arm'
+        - '%RECIPE_CACHE_DIR%/unpacked_arm_payload'
         - '%RECIPE_CACHE_DIR%/Universal'
         - '%RECIPE_CACHE_DIR%/unzip_intel'
         - '%RECIPE_CACHE_DIR%/unzip_arm'
