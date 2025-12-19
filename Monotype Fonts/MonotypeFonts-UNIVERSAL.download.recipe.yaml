@@ -1,5 +1,5 @@
 Description: Downloads the latest Monotype Fonts (Universal - ARM & Intel). MK 2024 12 19
-Identifier: com.github.markkenny.autopkg.download.monotypefonts-universal
+Identifier: com.github.markkenny.autopkg.download.monotypefonts
 MinimumVersion: "2.3"
 
 Input:
@@ -13,11 +13,10 @@ Process:
     Arguments:
       re_pattern: "%VERSION_PATTERN%"
       url: "%SEARCH_URL%"
-      result_output_variable_name: release_number
 
   - Processor: URLDownloader
     Arguments:
-      url: "https://monotypeapp.monotype.com/release/%release_number%/mac/intel/MTFInstallerMacOsIntel.zip"
+      url: "https://monotypeapp.monotype.com/release/%match%/mac/intel/MTFInstallerMacOsIntel.zip"
       filename: "MTFInstallerIntel.zip"
       destination_path: "%RECIPE_CACHE_DIR%"
 
@@ -30,7 +29,7 @@ Process:
 
   - Processor: URLDownloader
     Arguments:
-      url: "https://monotypeapp.monotype.com/release/%release_number%/mac/arm/MTFInstallerMacOsArm.zip"
+      url: "https://monotypeapp.monotype.com/release/%match%/mac/arm/MTFInstallerMacOsArm.zip"
       filename: "MTFInstallerArm.zip"
       destination_path: "%RECIPE_CACHE_DIR%"
 
@@ -59,3 +58,4 @@ Process:
 
   - Processor: EndOfCheckPhase
 
+  
