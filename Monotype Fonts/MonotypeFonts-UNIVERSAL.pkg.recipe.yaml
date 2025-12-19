@@ -30,52 +30,62 @@ Process:
   # Create directory structure
   - Processor: PkgRootCreator
     Arguments:
-      pkgdirs: {}
-      pkgroot: "%RECIPE_CACHE_DIR%/Universal/pkgroot"
+      pkgdirs:
+        scripts: "0755"
+        root: "0755"
+        root/private: "0755"
+        root/private/tmp: "0777"
+      pkgroot: "%RECIPE_CACHE_DIR%/universal"
 
-  - Processor: PkgRootCreator
-    Arguments:
-      pkgdirs: {}
-      pkgroot: "%RECIPE_CACHE_DIR%/Universal/scripts"
-
-# Copy both architecture packages to pkgroot
-  - Processor: Copier
-    Arguments:
-      overwrite: false
-      source_path: '%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg'
-      destination_path: "%RECIPE_CACHE_DIR%/Universal/pkgroot/%NAME%-ARM-%version%.pkg"
-
-  - Processor: Copier
+  # Copy both architecture packages to tmp
+  - Processor: FileMover
     Arguments:
       overwrite: false
-      source_path: '%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg'
-      destination_path: "%RECIPE_CACHE_DIR%/Universal/pkgroot/%NAME%-INTEL-%version%.pkg"
+      source: '%RECIPE_CACHE_DIR%/unzip_arm/MTFInstaller.pkg'
+      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-ARM-%version%.pkg"
 
-# Create preinstall script for architecture detection
+  - Processor: FileMover
+    Arguments:
+      overwrite: false
+      source: '%RECIPE_CACHE_DIR%/unzip_intel/MTFInstaller.pkg'
+      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-INTEL-%version%.pkg"
+
+  # Create postinstall script for architecture detection
   - Processor: FileCreator
     Arguments:
       file_content: |
-        #!/bin/bash
+        #!/bin/zsh
 
-        # Determine working directory
-        scriptDir=$(cd "$(dirname "$0")"; pwd)
-        pkgRootDir=$(dirname "$scriptDir")
+        # Set variables
+        declare -r INTEL="$3/private/tmp/%NAME%-INTEL-%version%.pkg"
+        declare -r APPLE_SILICON="$3/private/tmp/%NAME%-ARM-%version%.pkg"
 
-        # Identify installer package names
-        Intel_package="$pkgRootDir/%NAME%-INTEL-%version%.pkg"
-        Apple_Silicon_package="$pkgRootDir/%NAME%-ARM-%version%.pkg"
+        # Determine architecture
+        ARCH=$(/usr/bin/arch)
 
-        # Determine if this Mac has an Intel or Apple Silicon processor
-        processor=$( /usr/bin/arch | grep -o "arm64")
-        if [[ -n "$processor" ]]; then
-          /usr/sbin/installer -pkg "$Apple_Silicon_package" -target "$3"
+        # Install corresponding package
+        if [[ "${ARCH}" == i386 ]]
+        then
+            /usr/sbin/installer -pkg "${INTEL}" -target "$3"
+            EXIT_CODE=$?
         else
-          /usr/sbin/installer -pkg "$Intel_package" -target "$3"
+            /usr/sbin/installer -pkg "${APPLE_SILICON}" -target "$3"
+            EXIT_CODE=$?
+        fi
+
+        echo "Cleaning up..."
+        /bin/rm -rf "${INTEL}" "${APPLE_SILICON}"
+
+        # Check exit code and bail if the package didn't install correctly
+        if [[ "${EXIT_CODE}" -ne 0 ]]
+        then
+            echo "Something went wrong during package installation. Please check install.log and try again. Bailing..."
+            exit 1
         fi
 
         exit 0
       file_mode: "0755"
-      file_path: "%RECIPE_CACHE_DIR%/Universal/scripts/preinstall"
+      file_path: "%RECIPE_CACHE_DIR%/universal/scripts/postinstall"
 
   # Create universal wrapper package
   - Processor: PkgCreator
@@ -83,7 +93,8 @@ Process:
       pkg_request:
         id: com.monotype.fonts-universal
         pkgname: "%NAME%-Universal-%version%"
-        scripts: "%RECIPE_CACHE_DIR%/Universal/scripts"
+        pkgroot: "%RECIPE_CACHE_DIR%/universal/root"
+        scripts: "%RECIPE_CACHE_DIR%/universal/scripts"
         version: "%version%"
 
   # Cleanup
@@ -92,8 +103,9 @@ Process:
       path_list:
         - '%RECIPE_CACHE_DIR%/unpacked_arm'
         - '%RECIPE_CACHE_DIR%/unpacked_arm_payload'
-        - '%RECIPE_CACHE_DIR%/Universal'
+        - '%RECIPE_CACHE_DIR%/universal'
         - '%RECIPE_CACHE_DIR%/unzip_intel'
         - '%RECIPE_CACHE_DIR%/unzip_arm'
 
 
+        
