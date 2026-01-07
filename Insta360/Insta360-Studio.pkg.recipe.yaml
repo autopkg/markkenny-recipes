@@ -1,0 +1,43 @@
+Description: Packges the latest download of Insta360 Studio 2026 01 06. Props to DataJar!
+
+Identifier: om.github.markkenny.autopkg.pkg.insta360-studio
+ParentRecipe: com.github.dataJAR-recipes.download.Insta360 Studio
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Insta360 Studio
+
+Process:
+  - Processor: FileFinder
+    Arguments:
+      pattern: '%RECIPE_CACHE_DIR%/%NAME%/Insta360*.pkg'
+
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpacked"
+      flat_pkg_path: "%found_filename%"
+      purge_destination: true
+
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/Applications"
+      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpacked/Insta360_Studio.pkg/Payload"
+      purge_destination: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/Applications/Insta360 Studio.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString
+
+  - Processor: PkgCopier
+    Arguments:
+      source_pkg: "%found_filename%"
+      pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
+
+  - Processor: PathDeleter
+    Arguments:
+      path_list: 
+        - "%RECIPE_CACHE_DIR%/unpacked"
+        - "%RECIPE_CACHE_DIR%/Applications"
+        - "%RECIPE_CACHE_DIR%/Insta360 Studio"
+
