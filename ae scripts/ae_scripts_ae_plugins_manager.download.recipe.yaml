@@ -1,0 +1,26 @@
+Description: Downloads the latest aescripts + aeplugins manager app 2026 01 20
+Identifier: com.github.markkenny.autopkg.download.aescripts-aeplugins-manager
+MinimumVersion: "2.3"
+
+Input:
+  NAME: aescripts aeplugins manager
+
+Process:
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: 'https://updates.aescripts.com/updater/mac/aescripts%20+%20aeplugins%20manager%20(setup).dmg'
+
+- Processor: EndOfCheckPhase
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/aescripts + aeplugins.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/aescripts + aeplugins.app'
+    requirement: anchor apple generic and identifier "com.aescripts.updater.Updater" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YL6UJ9V949)
+

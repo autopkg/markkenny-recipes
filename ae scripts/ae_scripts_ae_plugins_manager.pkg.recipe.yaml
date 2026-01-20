@@ -1,0 +1,12 @@
+Description: Packages the latest aescripts + aeplugins manager app 2026 01 20
+Identifier: com.github.markkenny.autopkg.pkg.aescripts-aeplugins-manager
+ParentRecipe: com.github.markkenny.autopkg.download.aescripts-aeplugins-manager
+MinimumVersion: "2.3"
+
+Input:
+  NAME: aescripts aeplugins manager
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/aescripts_aeplugins_manager-%version%.pkg'
