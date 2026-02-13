@@ -36,8 +36,7 @@ Process:
 
   - Processor: PathDeleter
     Arguments:
-      path_list: 
+      path_list:
         - "%RECIPE_CACHE_DIR%/unpacked"
         - "%RECIPE_CACHE_DIR%/Applications"
         - "%RECIPE_CACHE_DIR%/Insta360 Studio"
-
