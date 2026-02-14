@@ -8,7 +8,7 @@ Input:
 Process:
 - Processor: SparkleUpdateInfoProvider
   Arguments:
-    appcast_url: https://colony-labs-public.s3.us-east-2.amazonaws.com/mac-updates/appcast.xml
+    appcast_url: https://colony-labs-public.s3.us-east-2.amazonaws.com/macos-updates/appcast.xml
 
 - Processor: com.github.homebysix.FindAndReplace/FindAndReplace
   Comment: The Screens Sparkle feed contains a double-encoded download URL, so we must manually fix it here.

@@ -1,0 +1,136 @@
+Description: Packages both ARM and INTEL versions of Scribe Desktop (Universal)
+Identifier: com.github.markkenny.autopkg.pkg.scribedesktop-universal
+ParentRecipe: com.github.markkenny.autopkg.download.scribedesktop-universal
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Scribe Desktop
+
+Process:
+  # Mount and verify ARM version
+  - Processor: MountDMG
+    Arguments:
+      dmg_path: '%RECIPE_CACHE_DIR%/%NAME%-ARM-%version%.dmg'
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%mount_point%/Scribe Desktop.app'
+      requirement: identifier "com.scribehow.ScribeDesktop" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RWB73CF447)
+
+  - Processor: FileMover
+    Arguments:
+      source: '%mount_point%/Scribe Desktop.app'
+      target: '%RECIPE_CACHE_DIR%/%NAME%-ARM.app'
+      overwrite: false
+
+  - Processor: MountDMG
+    Arguments:
+      dmg_path: '%RECIPE_CACHE_DIR%/%NAME%-ARM-%version%.dmg'
+      action: unmount
+
+  # Mount and verify INTEL version
+  - Processor: MountDMG
+    Arguments:
+      dmg_path: '%RECIPE_CACHE_DIR%/%NAME%-INTEL-%version%.dmg'
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%mount_point%/Scribe Desktop.app'
+      requirement: identifier "com.scribehow.ScribeDesktop" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RWB73CF447)
+
+  - Processor: FileMover
+    Arguments:
+      source: '%mount_point%/Scribe Desktop.app'
+      target: '%RECIPE_CACHE_DIR%/%NAME%-INTEL.app'
+      overwrite: false
+
+  - Processor: MountDMG
+    Arguments:
+      dmg_path: '%RECIPE_CACHE_DIR%/%NAME%-INTEL-%version%.dmg'
+      action: unmount
+
+  # Extract version from ARM app
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%-ARM.app/Contents/Info.plist'
+      plist_version_key: "CFBundleShortVersionString"
+
+  # Create directory structure for universal wrapper
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: "%RECIPE_CACHE_DIR%/universal"
+      pkgdirs:
+        scripts: "0755"
+        root: "0755"
+        root/private: "0755"
+        root/private/tmp: "0777"
+
+  # Copy both app bundles to tmp
+  - Processor: FileMover
+    Arguments:
+      source: '%RECIPE_CACHE_DIR%/%NAME%-ARM.app'
+      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-ARM.app"
+      overwrite: false
+
+  - Processor: FileMover
+    Arguments:
+      source: '%RECIPE_CACHE_DIR%/%NAME%-INTEL.app'
+      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-INTEL.app"
+      overwrite: false
+
+  # Create postinstall script for architecture detection
+  - Processor: FileCreator
+    Arguments:
+      file_path: "%RECIPE_CACHE_DIR%/universal/scripts/postinstall"
+      file_mode: "0755"
+      file_content: |
+        #!/bin/zsh
+
+        # Set variables
+        declare -r INTEL="$3/private/tmp/%NAME%-INTEL.app"
+        declare -r APPLE_SILICON="$3/private/tmp/%NAME%-ARM.app"
+        declare -r DEST="/Applications/%NAME%.app"
+
+        # Determine architecture
+        ARCH=$(/usr/bin/arch)
+
+        # Install corresponding app bundle
+        if [[ "${ARCH}" == i386 ]]
+        then
+            /bin/cp -r "${INTEL}" "${DEST}"
+            EXIT_CODE=$?
+        else
+            /bin/cp -r "${APPLE_SILICON}" "${DEST}"
+            EXIT_CODE=$?
+        fi
+
+        echo "Cleaning up..."
+        /bin/rm -rf "${INTEL}" "${APPLE_SILICON}"
+
+        # Check exit code and bail if copy failed
+        if [[ "${EXIT_CODE}" -ne 0 ]]
+        then
+            echo "Something went wrong during app installation. Bailing..."
+            exit 1
+        fi
+
+        exit 0
+
+  # Create universal wrapper package
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: com.scribehow.scribedesktop-universal
+        pkgname: "%NAME%-Universal-%version%"
+        pkgroot: "%RECIPE_CACHE_DIR%/universal/root"
+        scripts: "%RECIPE_CACHE_DIR%/universal/scripts"
+        version: "%version%"
+
+  # Cleanup
+  - Processor: PathDeleter
+    Arguments:
+      path_list:
+        - '%RECIPE_CACHE_DIR%/universal'
+        - '%RECIPE_CACHE_DIR%/%NAME%-ARM.app'
+        - '%RECIPE_CACHE_DIR%/%NAME%-INTEL.app'
+

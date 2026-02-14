@@ -1,0 +1,46 @@
+Description: Downloads the latest Scribe Desktop (Universal - ARM & Intel). MK 2026
+Identifier: com.github.markkenny.autopkg.download.scribedesktop-universal
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Scribe Desktop
+
+Process:
+  # Download ARM version
+  - Processor: SparkleUpdateInfoProvider
+    Arguments:
+      appcast_url: https://colony-labs-public.s3.us-east-2.amazonaws.com/macos-updates/appcast.xml
+
+  - Processor: com.github.homebysix.FindAndReplace/FindAndReplace
+    Comment: Fix double-encoded download URL
+    Arguments:
+      find: '%2520'
+      input_string: '%url%'
+      replace: '%20'
+
+  - Processor: URLDownloader
+    Arguments:
+      url: '%output_string%'
+      filename: '%NAME%-ARM-%version%.dmg'
+
+  # Store ARM download path, then get Intel version
+  - Processor: SparkleUpdateInfoProvider
+    Arguments:
+      appcast_url: https://colony-labs-public.s3.us-east-2.amazonaws.com/macos-intel-updates/appcast.xml
+
+  - Processor: com.github.homebysix.FindAndReplace/FindAndReplace
+    Comment: Fix double-encoded download URL
+    Arguments:
+      find: '%2520'
+      input_string: '%url%'
+      replace: '%20'
+
+  - Processor: URLDownloader
+    Arguments:
+      url: '%output_string%'
+      filename: '%NAME%-INTEL-%version%.dmg'
+
+  - Processor: EndOfCheckPhase
+
+
+  
