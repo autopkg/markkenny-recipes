@@ -7,34 +7,32 @@ Input:
   NAME: Scribe Desktop
 
 Process:
-  # Verify ARM DMG and copy app
+  # Verify and package ARM version
   - Processor: CodeSignatureVerifier
     Arguments:
       input_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-ARM-%version%.dmg/Scribe Desktop.app'
       requirement: identifier "com.scribehow.ScribeDesktop" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RWB73CF447)
 
-  - Processor: FileMover
+  - Processor: AppPkgCreator
     Arguments:
-      source: '%RECIPE_CACHE_DIR%/downloads/%NAME%-ARM-%version%.dmg/Scribe Desktop.app'
-      target: '%RECIPE_CACHE_DIR%/%NAME%-ARM.app'
-      overwrite: false
+      app_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-ARM-%version%.dmg/Scribe Desktop.app'
+      pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-ARM-%version%.pkg'
 
-  # Verify INTEL DMG and copy app
+  # Verify and package INTEL version
   - Processor: CodeSignatureVerifier
     Arguments:
       input_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-INTEL-%version%.dmg/Scribe Desktop.app'
       requirement: identifier "com.scribehow.ScribeDesktop" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = RWB73CF447)
 
-  - Processor: FileMover
+  - Processor: AppPkgCreator
     Arguments:
-      source: '%RECIPE_CACHE_DIR%/downloads/%NAME%-INTEL-%version%.dmg/Scribe Desktop.app'
-      target: '%RECIPE_CACHE_DIR%/%NAME%-INTEL.app'
-      overwrite: false
+      app_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-INTEL-%version%.dmg/Scribe Desktop.app'
+      pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-INTEL-%version%.pkg'
 
   # Extract version
   - Processor: Versioner
     Arguments:
-      input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%-ARM.app/Contents/Info.plist'
+      input_plist_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-ARM-%version%.dmg/Scribe Desktop.app/Contents/Info.plist'
       plist_version_key: "CFBundleShortVersionString"
 
   # Create directory structure for universal wrapper
@@ -47,17 +45,17 @@ Process:
         root/private: "0755"
         root/private/tmp: "0777"
 
-  # Copy both app bundles to tmp
+  # Copy both PKGs to tmp
   - Processor: FileMover
     Arguments:
-      source: '%RECIPE_CACHE_DIR%/%NAME%-ARM.app'
-      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-ARM.app"
+      source: '%RECIPE_CACHE_DIR%/%NAME%-ARM-%version%.pkg'
+      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-ARM-%version%.pkg"
       overwrite: false
 
   - Processor: FileMover
     Arguments:
-      source: '%RECIPE_CACHE_DIR%/%NAME%-INTEL.app'
-      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-INTEL.app"
+      source: '%RECIPE_CACHE_DIR%/%NAME%-INTEL-%version%.pkg'
+      target: "%RECIPE_CACHE_DIR%/universal/root/private/tmp/%NAME%-INTEL-%version%.pkg"
       overwrite: false
 
   # Create postinstall script for architecture detection
@@ -69,30 +67,29 @@ Process:
         #!/bin/zsh
 
         # Set variables
-        declare -r INTEL="$3/private/tmp/%NAME%-INTEL.app"
-        declare -r APPLE_SILICON="$3/private/tmp/%NAME%-ARM.app"
-        declare -r DEST="/Applications/%NAME%.app"
+        declare -r INTEL="$3/private/tmp/%NAME%-INTEL-%version%.pkg"
+        declare -r APPLE_SILICON="$3/private/tmp/%NAME%-ARM-%version%.pkg"
 
         # Determine architecture
         ARCH=$(/usr/bin/arch)
 
-        # Install corresponding app bundle
+        # Install corresponding package
         if [[ "${ARCH}" == i386 ]]
         then
-            /bin/cp -r "${INTEL}" "${DEST}"
+            /usr/sbin/installer -pkg "${INTEL}" -target "$3"
             EXIT_CODE=$?
         else
-            /bin/cp -r "${APPLE_SILICON}" "${DEST}"
+            /usr/sbin/installer -pkg "${APPLE_SILICON}" -target "$3"
             EXIT_CODE=$?
         fi
 
         echo "Cleaning up..."
         /bin/rm -rf "${INTEL}" "${APPLE_SILICON}"
 
-        # Check exit code and bail if copy failed
+        # Check exit code and bail if the package didn't install correctly
         if [[ "${EXIT_CODE}" -ne 0 ]]
         then
-            echo "Something went wrong during app installation. Bailing..."
+            echo "Something went wrong during package installation. Bailing..."
             exit 1
         fi
 
@@ -113,7 +110,7 @@ Process:
     Arguments:
       path_list:
         - '%RECIPE_CACHE_DIR%/universal'
-        - '%RECIPE_CACHE_DIR%/%NAME%-ARM.app'
-        - '%RECIPE_CACHE_DIR%/%NAME%-INTEL.app'
+        - '%RECIPE_CACHE_DIR%/%NAME%-ARM-%version%.pkg'
+        - '%RECIPE_CACHE_DIR%/%NAME%-INTEL-%version%.pkg'
 
         
