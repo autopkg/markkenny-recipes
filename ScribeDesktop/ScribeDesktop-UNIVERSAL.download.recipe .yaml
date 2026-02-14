@@ -23,7 +23,7 @@ Process:
       url: '%output_string%'
       filename: '%NAME%-ARM-%version%.dmg'
 
-  # Store ARM download path, then get Intel version
+  # Download INTEL version
   - Processor: SparkleUpdateInfoProvider
     Arguments:
       appcast_url: https://colony-labs-public.s3.us-east-2.amazonaws.com/macos-intel-updates/appcast.xml
