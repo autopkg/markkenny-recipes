@@ -112,5 +112,3 @@ Process:
         - '%RECIPE_CACHE_DIR%/universal'
         - '%RECIPE_CACHE_DIR%/%NAME%-ARM-%version%.pkg'
         - '%RECIPE_CACHE_DIR%/%NAME%-INTEL-%version%.pkg'
-
-
