@@ -1,0 +1,11 @@
+Comment: Written by MK 2026 04 13 - Happy St Georges Day! 
+Description: Packages the latest downloaded version of Monotpye Connect. (Formally Extensis Connect. Formerly Connect Fonts. Still SuitcaseFusion!!!).
+Identifier: com.github.markkenny.autopkg.pkg.MonotypeConnect
+ParentRecipe: com.github.markkenny.autopkg.download.MonotypeConnect
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Monotype Connect
+
+Process:
+- Processor: AppPkgCreator
