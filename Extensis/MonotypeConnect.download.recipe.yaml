@@ -1,0 +1,31 @@
+Description: Downloads the latest version of Monotype Connect. Updated for new app name.
+Identifier: com.github.markkenny.autopkg.download.MonotypeConnect
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Monotype Connect
+  DOWNLOAD_URL: "https://links.extensis.com/extensis_connect/ec_latest?language=en&platform=mac"
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: "%DOWNLOAD_URL%"
+      re_pattern: "(?<=location: ).*?\\.dmg"
+      result_output_var_name: actual_download_url
+      request_headers:
+        User-Agent: "Mozilla/5.0"
+
+  - Processor: URLDownloader
+    Arguments:
+      url: "%actual_download_url%"
+      filename: "%NAME%.dmg"
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: "%pathname%/Monotype Connect.app"
+      requirement: identifier "com.extensis.SuitcaseFusion" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J6MMHGD9D6
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%pathname%/Monotype Connect.app/Contents/Info.plist"
+      plist_version_key: CFBundleShortVersionString
