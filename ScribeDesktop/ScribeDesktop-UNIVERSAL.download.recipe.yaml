@@ -41,6 +41,3 @@ Process:
       filename: '%NAME%-INTEL-%version%.dmg'
 
   - Processor: EndOfCheckPhase
-
-
-  
