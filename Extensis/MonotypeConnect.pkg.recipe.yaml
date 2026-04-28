@@ -9,3 +9,5 @@ Input:
 
 Process:
 - Processor: AppPkgCreator
+  Arguments:
+    app_path: "%pathname%/Monotype Connect.app"
