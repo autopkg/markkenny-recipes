@@ -1,9 +1,9 @@
-Description: Downloads the latest version of Monotype Connect.
+Description: Downloads the latest version of Monotype Connect. Updated for new app name.
 Identifier: com.github.markkenny.autopkg.download.MonotypeConnect
 MinimumVersion: "2.3"
 
 Input:
-  NAME: MonotypeConnect
+  NAME: Monotype Connect
   DOWNLOAD_URL: "https://links.extensis.com/extensis_connect/ec_latest?language=en&platform=mac"
 
 Process:
@@ -25,3 +25,4 @@ Process:
     Arguments:
       input_plist_path: "%pathname%/Monotype Connect.app/Contents/Info.plist"
       plist_version_key: CFBundleShortVersionString
+
