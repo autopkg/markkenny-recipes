@@ -25,4 +25,3 @@ Process:
     Arguments:
       input_plist_path: "%pathname%/Monotype Connect.app/Contents/Info.plist"
       plist_version_key: CFBundleShortVersionString
-
