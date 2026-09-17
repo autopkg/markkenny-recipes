@@ -1,0 +1,10 @@
+Comment: Created by MK
+Description: Downloads the latest Intel (x64) version of GitHub Copilot for macOS from GitHub.
+Identifier: com.github.markkenny.autopkg.download.githubcopilot-intel
+ParentRecipe: com.github.markkenny.autopkg.download.githubcopilot
+MinimumVersion: "2.3"
+
+Input:
+  NAME: GitHub Copilot
+  ARCH: x64
+
