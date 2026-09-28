@@ -1,0 +1,29 @@
+Comment: Created by MK 2026 09 28
+Description: Downloads the latest Frame IO Drive installer package.
+Identifier: com.github.markkenny.autopkg.download.frameiodrive
+MinimumVersion: '2.3'
+
+Input:
+  NAME: FrameIO Drive
+  ARCH: arm64
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '(https://drive\.frame\.io/latest/downloads/darwin/%ARCH%/Frame\.io(?:%20|\+| )Drive\.pkg)'
+    url: 'https://frame.io/drive'
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.pkg'
+    url: '%match%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+      - 'Developer ID Installer: Frame.io, Inc. (6D429SHX3Y)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+    input_path: '%pathname%'

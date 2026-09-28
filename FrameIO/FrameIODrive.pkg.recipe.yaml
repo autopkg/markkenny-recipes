@@ -1,0 +1,37 @@
+Comment: Created by MK 2026 09 28
+Description: Downloads and packages the latest version of Frame.io Drive.
+Identifier: com.github.markkenny.autopkg.pkg.frameiodrive
+ParentRecipe: com.github.markkenny.autopkg.download.frameiodrive
+MinimumVersion: '2.3'
+
+Input:
+  NAME: FrameIO Drive
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpack'
+    flat_pkg_path: '%pathname%'
+    purge_destination: true
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/payload'
+    pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/com.frameio.drive.pkg/Payload'
+    purge_destination: true
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/payload/Frame.io Drive.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/unpack'
+    - '%RECIPE_CACHE_DIR%/payload'
