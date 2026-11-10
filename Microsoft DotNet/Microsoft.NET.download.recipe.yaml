@@ -1,0 +1,40 @@
+Description: Downloads Microsoft .NET - Needs lots of options!
+Identifier: com.github.markkenny.autopkg.download.microsoft.NET
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Microsoft.NET
+  APP_VERSION: "8"        # "8" or "9" or "10"
+  APP_TYPE: Runtime       # Sdk or Runtime 
+  APP_TYPE_lower: runtime # sdk or runtime
+  ARCH_TYPE: arm64        # arm64 or x64
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://dotnet.microsoft.com/en-us/download/dotnet/%APP_VERSION%.0
+      result_output_var_name: SEARCH_URL
+      re_pattern: href=\"(/en-us/download/dotnet/thank-you/%APP_TYPE_lower%-%APP_VERSION%.([0-9]+(\.[0-9]+)+)-macos-%ARCH_TYPE%-installer)\"
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://dotnet.microsoft.com%SEARCH_URL%
+      result_output_var_name: DOWNLOAD_URL
+      re_pattern: href=\"(https://builds\.dotnet\.microsoft\.com/dotnet/%APP_TYPE%/%APP_VERSION%\.([0-9]+(\.[0-9]+)+)/dotnet-%APP_TYPE_lower%-%APP_VERSION%\.([0-9]+(\.[0-9]+)+)-osx-%ARCH_TYPE%\.pkg)\"
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%.pkg'
+      url: '%DOWNLOAD_URL%'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%'
+      expected_authority_names: 
+      - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+
+

@@ -1,0 +1,42 @@
+Description: Packages the latest version of Microsoft .NET - Needs lots of options!
+Identifier: com.github.markkenny.autopkg.pkg.microsoft.NET
+ParentRecipe: com.github.markkenny.autopkg.download.microsoft.NET
+
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Microsoft.NET
+  APP_VERSION: "8"        # "8" or "9" or "10"
+  APP_TYPE: Runtime       # Sdk or Runtime 
+  APP_TYPE_lower: runtime # sdk or runtime
+  ARCH_TYPE: arm64        # arm64 or x64
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpacked'
+    flat_pkg_path: '%pathname%'
+    purge_destination: true
+
+- Processor: com.github.homebysix.FindAndReplace/FindAndReplace
+  Arguments:
+    find: ' '
+    input_string: 'file://localhost/%RECIPE_CACHE_DIR%/unpacked/Distribution'
+    replace: '%20'
+
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '(?i)<title>microsoft.*?\.net.*?(sdk|runtime).*?(\d+\.\d+\.\d+(?:\.\d+)*)'
+    result_output_var_name: version
+    url: '%output_string%'
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%APP_VERSION%-%APP_TYPE%-%ARCH_TYPE%-%version%.pkg"
+    source_pkg: "%pathname%"
+
+- Processor: PathDeleter
+  Arguments:
+    path_list: '%RECIPE_CACHE_DIR%/unpacked'
+
+    
