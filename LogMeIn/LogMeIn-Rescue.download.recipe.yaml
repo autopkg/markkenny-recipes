@@ -1,0 +1,26 @@
+---
+Comment: Created by MK 2024 01 23. Converted to YAML 2026 11 10
+Description: Downloads the latest DMG of LogMeIn Technicians console.
+Identifier: com.github.markkenny.autopkg.download.logmein-rescue
+MinimumVersion: "2.3"
+
+Input:
+  NAME: LogMeIn-Rescue
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      filename: LogMeInRescueTechnicianConsoleMAC.dmg
+      url: https://secure.logmeinrescue.com/Files/TechConsoleMAC/LogMeInRescueTechnicianConsoleMAC.dmg
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: "%pathname%/LogMeIn-Rescue.app"
+      requirement: identifier "com.codeweavers.LogMeInRescue" and anchor apple generic and certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GFNFVT632V
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%pathname%/LogMeIn-Rescue.app/Contents/Info.plist"
+      plist_version_key: CFBundleShortVersionString
