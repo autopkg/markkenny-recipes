@@ -8,3 +8,5 @@ tmp="/private/tmp"
 # Clean up installer and varfile
 rm -rf "$tmp"/OpenWebStart.app
 rm -rf "$tmp"/response.varfile
+
+

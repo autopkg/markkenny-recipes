@@ -1,7 +1,7 @@
-Description: Download the latest release of the OpenWebStart installer and build a package.
+Description: Download the latest release of the OpenWebStart installer and builds a package with a post istall and response varfile.
 Identifier: com.github.markkenny.autopkg.pkg.OpenWebStart
 ParentRecipe: com.github.markkenny.autopkg.download.OpenWebStart
-MinimumVersion: "1.0"
+MinimumVersion: "2.3"
 
 Input:
   NAME: OpenWebStart
@@ -38,3 +38,4 @@ Process:
       pkgname: '%NAME%-%ARCH%-%version%'
       scripts: scripts
       version: '%version%'
+
