@@ -1,0 +1,15 @@
+Comment: Created by MK 2025 11 10
+Description: Packges the latest version of XRite i1 Profiler.
+Identifier: com.github.markkenny.autopkg.pkg.xrite-i1profiler
+ParentRecipe: com.github.dataJAR-recipes.download.i1Profiler
+MinimumVersion: "2.3"
+
+Input:
+  NAME: i1Profiler
+
+Process:
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%input_path%'
+
