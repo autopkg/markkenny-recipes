@@ -1,0 +1,25 @@
+---
+Description: Downloads the latest version of Mister Horse Product Manager.
+Identifier: com.github.markkenny.autopkg.download.MisterHorseProductManager
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Mister Horse Product Manager
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      filename: "%NAME%.dmg"
+      url: https://misterhorse.com/downloads/product-manager/osx
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: "%pathname%/Mister Horse Product Manager.app"
+      requirement: anchor apple generic and identifier "com.misterhorse.ProductManager" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = H6366SAGL3)
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%pathname%/Mister Horse Product Manager.app/Contents/Info.plist"
+      plist_version_key: CFBundleVersion
