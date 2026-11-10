@@ -1,4 +1,3 @@
----
 Description: Downloads the latest version of Mister Horse Product Manager.
 Identifier: com.github.markkenny.autopkg.download.MisterHorseProductManager
 MinimumVersion: "2.3"
