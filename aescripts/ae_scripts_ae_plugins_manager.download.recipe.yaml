@@ -1,4 +1,4 @@
-Description: Downloads the latest aescripts + aeplugins manager app 2026 01 20
+Description: Downloads the latest aescripts + aeplugins manager app 2026 11 11
 Identifier: com.github.markkenny.autopkg.download.aescripts-aeplugins-manager
 MinimumVersion: "2.3"
 
@@ -10,7 +10,10 @@ Process:
 - Processor: URLDownloader
   Arguments:
     filename: '%NAME%.dmg'
+    request_headers:
+      user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
     url: 'https://updates.aescripts.com/updater/mac/aescripts%20+%20aeplugins%20manager%20(setup).dmg'
+
 
 - Processor: EndOfCheckPhase
 
